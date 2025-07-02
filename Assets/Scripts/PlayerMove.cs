@@ -6,7 +6,8 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float speed = 5f;
     [SerializeField] private float jumpForce = 5f;
     private Vector2 moveVector;
-    [SerializeField] private bool onground;
+    private bool onground;
+    private bool moveEnabled = true;
 
     public bool OnGround
     {
@@ -14,10 +15,10 @@ public class PlayerMove : MonoBehaviour
         private set { onground = value; anim.SetBool("OnGround", value); }
     }
 
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
     private SpriteRenderer sr;
-    private CapsuleCollider2D cc;
-    private Animator anim;
+    public CapsuleCollider2D cc;
+    public Animator anim;
 
     private void Awake()
     {
@@ -30,12 +31,11 @@ public class PlayerMove : MonoBehaviour
     private void FixedUpdate()
     {
         if (Physics2D.BoxCast(transform.position, cc.size, 0, Vector2.down, 1f, LayerMask.GetMask("Ground")))
-            OnGround = true;
-        else
-            OnGround = false;
+                OnGround = true;
+            else
+                OnGround = false;
 
         rb.linearVelocityX = moveVector.x * speed;
-
         PlayerAnimation();
     }
 
@@ -50,8 +50,8 @@ public class PlayerMove : MonoBehaviour
             anim.SetBool("IsMoving", true);
         else
             anim.SetBool("IsMoving", false);
-        
-        if (rb.linearVelocityY < -0.1f && !OnGround) 
+
+        if (rb.linearVelocityY < -0.1f && !OnGround)
             anim.SetBool("IsFalling", true);
         else
             anim.SetBool("IsFalling", false);
@@ -59,13 +59,28 @@ public class PlayerMove : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        moveVector = context.ReadValue<Vector2>();
+        if (moveEnabled)
+            moveVector = context.ReadValue<Vector2>();
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (OnGround && context.performed)
-            rb.linearVelocityY = jumpForce;
-            anim.SetTrigger("Jump");
+        if (moveEnabled && OnGround && context.performed)
+        {
+        rb.linearVelocityY = jumpForce;
+        anim.SetTrigger("Jump");
+        }
+    }
+
+    public void StopMovement()
+    {
+        moveVector = Vector2.zero;
+        rb.linearVelocityX = 0;
+        moveEnabled = false;
+    }
+
+    public void EnableMovement()
+    {
+        moveEnabled = true;
     }
 }
