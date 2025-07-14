@@ -1,0 +1,18 @@
+{
+  "character1": "A",
+  "character2": "B",
+  "dialogues": [
+    {
+      "speaker": "A",
+      "state": "Neutral",
+      "texts": [
+        "He",
+        "Hell",
+        "Hello,",
+        "Hello, Wo",
+        "Hello, Worl",
+        "Hello, World!"
+      ]
+    }
+  ]
+}
