@@ -144,7 +144,7 @@ public class PlayerController : MonoBehaviour
     {
         if (context.performed)
         {
-
+            Debug.Log("코르티솔");
         }
     }
 

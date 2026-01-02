@@ -20,7 +20,7 @@ public class ShoutingAttack : MonoBehaviour
     {
         rb.linearVelocityX = 0;
         anim.SetTrigger("Attack"); //웅크리다 소리지르기
-        yield return new WaitForSeconds(1f); //공격 모션 시간
+        yield return new WaitForSeconds(1f); //선딜
         Collider2D col = Physics2D.OverlapCircle(hitRange.bounds.center, hitRange.bounds.size.x/2, LayerMask.GetMask("Player"));
         if (col != null)
         {

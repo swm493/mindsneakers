@@ -580,7 +580,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 40
   m_Sprite: {fileID: -2425068948780354478, guid: 30e5be21e6f989b4f84713160d124180, type: 3}
-  m_Color: {r: 1, g: 0.4403456, b: 0, a: 1}
+  m_Color: {r: 0.49538696, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -697,7 +697,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82f58dd961c8896479c59ab56750eb27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookingDirection: {x: 1, y: 0}
+  lookingDirection: {x: -1, y: 0}
   isTargeted: 0
   isEA: 0
   anim: {fileID: 0}
@@ -715,7 +715,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aggroGauge: 0
   attackEnabled: 1
-  startAttack: {fileID: 0}
+  startAttack: {fileID: 8957099783814595193}
   aggroGaugeBar: {fileID: 9061829965031604550}
   defMechType: 3
   moveSpeed: 3

@@ -111,7 +111,7 @@ public class DefMechanism : MonoBehaviour
         else if (aggroGauge <= 0)
         {
             if (IsInSight()
-            || (player != null && Mathf.Abs(player.transform.position.x - transform.position.x) < 2f 
+            || (player != null && Mathf.Abs(player.transform.position.x - transform.position.x) < 1.3f 
                 && Mathf.Abs(player.transform.position.y - transform.position.y) < 0.5f))
             {
                 StartFollowing();

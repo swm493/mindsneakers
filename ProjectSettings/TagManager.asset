@@ -8,19 +8,9 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-<<<<<<< Updated upstream
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-=======
   - Ground
   - Ladder
   - Platform
@@ -29,7 +19,6 @@ TagManager:
   - Enemy
   - Wall
   - Particle
->>>>>>> Stashed changes
   - 
   - 
   - 
@@ -52,11 +41,8 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-<<<<<<< Updated upstream
-=======
   - name: UI
     uniqueID: 2784482451
     locked: 0
   m_RenderingLayers:
   - Default
->>>>>>> Stashed changes

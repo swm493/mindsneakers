@@ -24,7 +24,7 @@ public class BeakerAttack : MonoBehaviour
     {
         anim.SetTrigger("Attack1");
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f); //선딜
 
         /* time contant version (g, v = 7, 2)
         acidParticle.GetComponent<Rigidbody2D>().linearVelocity = speed * new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y + gravity);
@@ -35,7 +35,7 @@ public class BeakerAttack : MonoBehaviour
                 new Vector2(Mathf.Sqrt(2 - Mathf.Sqrt(4 - 4 * Mathf.Pow(gravity * (player.transform.position.x - transform.position.x) / Mathf.Pow(speed, 2), 2))) * (player.transform.position.x > transform.position.x ? 1 : -1), 
                             Mathf.Sqrt(2 + Mathf.Sqrt(4 - 4 * Mathf.Pow(gravity * (player.transform.position.x - transform.position.x) / Mathf.Pow(speed, 2), 2))));
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1f); //후딜
         anim.SetTrigger("ChangeForm");
         attacklevel = 2;
         dm.StopAttack(3f);
@@ -45,7 +45,7 @@ public class BeakerAttack : MonoBehaviour
     {
         anim.SetTrigger("Attack2");
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f); //선딜
 
         /* time contant version (g, v = 7, 2)
         beakerParticle.GetComponent<Rigidbody2D>().linearVelocity = speed * new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y + gravity);
@@ -57,7 +57,7 @@ public class BeakerAttack : MonoBehaviour
                 new Vector2(Mathf.Sqrt(2 - Mathf.Sqrt(4 - 4 * Mathf.Pow(gravity * (player.transform.position.x - transform.position.x) / Mathf.Pow(speed, 2), 2))) * (player.transform.position.x > transform.position.x ? 1 : -1), 
                             Mathf.Sqrt(2 + Mathf.Sqrt(4 - 4 * Mathf.Pow(gravity * (player.transform.position.x - transform.position.x) / Mathf.Pow(speed, 2), 2))));
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1f); //후딜
         anim.SetTrigger("NothingForm");
         attacklevel = 0;
         dm.StopAttack(0f);

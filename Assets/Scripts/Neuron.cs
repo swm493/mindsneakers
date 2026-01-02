@@ -15,7 +15,7 @@ using UnityEngine;
 public class Neuron : MonoBehaviour
 {
     [SerializeField] private GameObject NeuronTail;
-    [SerializeField] private GameObject[] NeuronCorners;
+    [SerializeField] private GameObject[] NeuronCorners = null;
 
     private Vector3 direction;
     private float speed = 0.1f;
@@ -75,12 +75,12 @@ public class Neuron : MonoBehaviour
         }
         spark.SetActive(false);
         player.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
-        player.EnableMovement();
-        player.GetComponent<PlayerController>().onNeuron = false;
         for (int i = 0; i < 80; i++)
         {
             player.transform.localScale += 0.07f * Vector3.one;
             yield return new WaitForSeconds(0.003f);
         }
+        player.EnableMovement();
+        player.GetComponent<PlayerController>().onNeuron = false;
     }
 }
