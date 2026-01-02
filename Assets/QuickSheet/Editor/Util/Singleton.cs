@@ -19,11 +19,11 @@ namespace UnityQuickSheet
             {
                 if (instance == null)
                 {
-                    instance = (T)FindObjectOfType(typeof(T));
+                    instance = (T)FindAnyObjectByType(typeof(T));
 
                     if (instance == null)
                     {
-                        GameObject obj = new GameObject(typeof(T).ToString());
+                        GameObject obj = new(typeof(T).ToString());
                         instance = obj.AddComponent<T>();
                         //Debug.LogError("An instance of " + typeof(T) + 
                         //   " is needed in the scene, but there is none.");

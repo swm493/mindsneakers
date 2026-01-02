@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3089989713532525253}
   - component: {fileID: 4809455251787251675}
   m_Layer: 5
-  m_Name: CharacterName1
+  m_Name: LeftNameBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,6 +76,43 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &2149489683741674828
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7235428204237630673}
+  m_Layer: 5
+  m_Name: Portraits
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &7235428204237630673
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2149489683741674828}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2760812218430807235}
+  - {fileID: 5994551787713418536}
+  m_Father: {fileID: 7450916017967523174}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2276332974837096561
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,7 +125,7 @@ GameObject:
   - component: {fileID: 7187046713188867846}
   - component: {fileID: 206500181123594738}
   m_Layer: 5
-  m_Name: ContentText
+  m_Name: DialogueText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -179,6 +216,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -224,7 +262,7 @@ GameObject:
   - component: {fileID: 8304332019282179597}
   - component: {fileID: 1099700292239583481}
   m_Layer: 5
-  m_Name: CharacterImage1
+  m_Name: LeftPortrait
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -237,12 +275,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2842028440874271170}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7450916017967523174}
+  m_Father: {fileID: 7235428204237630673}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
@@ -337,7 +375,7 @@ GameObject:
   - component: {fileID: 7535358407805655520}
   - component: {fileID: 6591964903845807607}
   m_Layer: 5
-  m_Name: NameText2
+  m_Name: RightNameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -428,6 +466,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -473,7 +512,7 @@ GameObject:
   - component: {fileID: 8342670055213200621}
   - component: {fileID: 546091627441427801}
   m_Layer: 5
-  m_Name: NameText1
+  m_Name: LeftNameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -564,6 +603,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -609,7 +649,7 @@ GameObject:
   - component: {fileID: 4870402624510234830}
   - component: {fileID: 2502383258640362576}
   m_Layer: 5
-  m_Name: CharacterName2
+  m_Name: RightNameBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -685,7 +725,7 @@ GameObject:
   - component: {fileID: 9057606855000748089}
   - component: {fileID: 6339516955893468375}
   m_Layer: 5
-  m_Name: CharacterImage2
+  m_Name: RightPortrait
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -698,12 +738,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6494230156154413500}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7450916017967523174}
+  m_Father: {fileID: 7235428204237630673}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -780,8 +820,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2760812218430807235}
-  - {fileID: 5994551787713418536}
+  - {fileID: 7235428204237630673}
   - {fileID: 1924310387386572719}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -802,10 +841,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc96534f9fd479c48a3401468eb484d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dialoguePath: Dialogue/test.json
-  _contentText: {fileID: 206500181123594738}
-  _nameText1: {fileID: 546091627441427801}
-  _nameText2: {fileID: 6591964903845807607}
+  dialogueData: {fileID: 0}
+  leftNameText: {fileID: 546091627441427801}
+  rightNameText: {fileID: 6591964903845807607}
+  bodyText: {fileID: 206500181123594738}
+  textContainer: {fileID: 0}
+  leftPortrait: {fileID: 1099700292239583481}
+  rightPortrait: {fileID: 6339516955893468375}
 --- !u!223 &950125460627210500
 Canvas:
   m_ObjectHideFlags: 0
@@ -881,7 +923,7 @@ GameObject:
   - component: {fileID: 2044289897198980104}
   - component: {fileID: 199566677436086471}
   m_Layer: 5
-  m_Name: DialogueBackGround
+  m_Name: DialogueBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
