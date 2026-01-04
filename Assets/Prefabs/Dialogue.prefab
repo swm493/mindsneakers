@@ -841,11 +841,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc96534f9fd479c48a3401468eb484d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueData: {fileID: 0}
+  dialogueData: {fileID: 11400000, guid: efbf8f5a28377bc429e9e1d174b2a97b, type: 2}
   leftNameText: {fileID: 546091627441427801}
   rightNameText: {fileID: 6591964903845807607}
   bodyText: {fileID: 206500181123594738}
-  textContainer: {fileID: 0}
   leftPortrait: {fileID: 1099700292239583481}
   rightPortrait: {fileID: 6339516955893468375}
 --- !u!223 &950125460627210500
