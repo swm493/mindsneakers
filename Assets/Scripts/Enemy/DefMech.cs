@@ -11,30 +11,40 @@ public class DefMechanism : MonoBehaviour
     private int maxAggroGauge = 4;
     private bool isAttacking = false;
     public bool attackEnabled = true;
-
     [SerializeField] private Collider2D startAttack;
     [SerializeField] private Image aggroGaugeBar;
+
+    /****************HyperParameters*****************/
     [SerializeField] private DefMechType defMechType;
     [SerializeField] private float moveSpeed = 3f;
-    [SerializeField] private float SightRange = 7f;
+    [SerializeField] private float sightRange = 7f;
+    [SerializeField] private bool isSleeping = false;
+    [SerializeField] private bool isWanderingType = false;
+    [SerializeField] private Transform[] destinations;
+    /*************************************************/
 
 
     private EnemyController ec;
     private Rigidbody2D rb;
+    private Animator anim;
 
-    [SerializeField]
     private enum DefMechType {VernierAttack, ShoutingAttack, BadWordAttack, BeakerAttack}
 
     private void Awake()
     {
         ec = GetComponent<EnemyController>();
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+
+        anim.SetBool("IsSleeping", isSleeping);
+        if (isWanderingType)
+            StartCoroutine(WanderingSystem());
     }
 
     private void Update()
     {
         aggroGaugeBar.fillAmount = (float)aggroGauge / maxAggroGauge;
-        if (!GetComponent<EnemyController>().isEA)
+        if (!GetComponent<EnemyController>().isEA && !isSleeping)
         {
             AttackSystem(); //공격 시스템
         }
@@ -48,20 +58,24 @@ public class DefMechanism : MonoBehaviour
         {
             if (!isAttacking) //따라다니기
             {
+                Vector3 frontOfFootPos = transform.position + new Vector3(0.5f * ec.SightXInt(), -1);
                 if (player != null)
                 {
                     ec.lookingDirection = (player.transform.position - transform.position).normalized;
-                    if (player.transform.position.x - transform.position.x > 1.2f)
+                    if (Physics2D.OverlapCircle(frontOfFootPos, 0.3f, LayerMask.GetMask("Platform", "Ground")) != null)
                     {
-                        rb.linearVelocityX = moveSpeed;
-                    }
-                    else if (player.transform.position.x - transform.position.x < -1.2f)
-                    {
-                        rb.linearVelocityX = -moveSpeed;
-                    }
-                    else
-                    {
-                        rb.linearVelocityX = 0;
+                        if (player.transform.position.x - transform.position.x > 0.5f)
+                        {
+                            rb.linearVelocityX = moveSpeed;
+                        }
+                        else if (player.transform.position.x - transform.position.x < -0.5f)
+                        {
+                            rb.linearVelocityX = -moveSpeed;
+                        }
+                        else
+                        {
+                            rb.linearVelocityX = 0;
+                        }
                     }
                 }
             }
@@ -105,6 +119,7 @@ public class DefMechanism : MonoBehaviour
                     rb.linearVelocityX = 0;
                     aggroGauge = 0;
                     ec.lookingDirection = new Vector2 (ec.SightXInt(), 0);
+                    StartCoroutine(WanderingSystem());
                 }
             }
         }
@@ -119,9 +134,29 @@ public class DefMechanism : MonoBehaviour
         }
     }
 
+    private IEnumerator WanderingSystem()
+    {
+        if (destinations.Length == 0) yield break;
+        int i = 0;
+        while(!ec.isEA && aggroGauge == 0)
+        {
+            while (Mathf.Abs(destinations[i].position.x - transform.position.x) > 0.1f && !ec.isEA && aggroGauge == 0)
+            {
+                ec.lookingDirection.x = (destinations[i].position.x - transform.position.x) > 0 ? 1f : -1f;
+                rb.linearVelocityX = moveSpeed * ec.SightXInt();
+                yield return null;
+            }
+            yield return new WaitForSeconds(2f);
+            if (i == destinations.Length - 1) i = 0;
+            else i++;
+        }
+    }
+
     public void StartFollowing()
     {
         aggroGauge = maxAggroGauge;
+        isSleeping = false;
+        anim.SetBool("IsSleeping", isSleeping);
     }
 
     public void StopAttack(float cooltime)
@@ -137,8 +172,8 @@ public class DefMechanism : MonoBehaviour
 
     private bool IsInSight()
     {
-        RaycastHit2D player = Physics2D.Raycast(transform.position, ec.lookingDirection, SightRange, LayerMask.GetMask("Player", "Wall", "Ground"));
-        Debug.DrawRay(transform.position, ec.lookingDirection * SightRange, Color.red);
+        RaycastHit2D player = Physics2D.Raycast(transform.position, ec.lookingDirection, sightRange, LayerMask.GetMask("Player", "Wall", "Ground"));
+        Debug.DrawRay(transform.position, ec.lookingDirection * sightRange, Color.red);
         
         return player.collider != null && player.collider.gameObject.CompareTag("Player")
                 && Mathf.Abs(player.transform.position.y - transform.position.y) < 6f;

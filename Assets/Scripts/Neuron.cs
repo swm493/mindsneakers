@@ -14,8 +14,8 @@ using UnityEngine;
 
 public class Neuron : MonoBehaviour
 {
-    [SerializeField] private GameObject NeuronTail;
-    [SerializeField] private GameObject[] NeuronCorners = null;
+    [SerializeField] private Transform NeuronTail;
+    [SerializeField] private Transform[] NeuronCorners = null;
 
     private Vector3 direction;
     private float speed = 0.1f;
@@ -30,7 +30,7 @@ public class Neuron : MonoBehaviour
         }
         else
         {
-            player.StopMovement();
+            player.DisableMovement();
             StartCoroutine(SendSignalAnim(player, spark));
         }
     }
@@ -58,18 +58,18 @@ public class Neuron : MonoBehaviour
         //코너링
         for (int i = 0; i < NeuronCorners.Length; i++)
         {
-            while (Vector3.Distance(NeuronCorners[i].transform.position, player.transform.position) > 0.07f)
+            while (Vector3.Distance(NeuronCorners[i].position, player.transform.position) > 0.07f)
             {
-                direction = (NeuronCorners[i].transform.position - player.transform.position).normalized;
+                direction = (NeuronCorners[i].position - player.transform.position).normalized;
                 player.transform.position += direction * speed;
                 yield return new WaitForSeconds(0.01f);
             }
         }
 
         //꼬리
-        while (Vector3.Distance(NeuronTail.transform.position, player.transform.position) > 0.07f)
+        while (Vector3.Distance(NeuronTail.position, player.transform.position) > 0.07f)
         {
-            direction = (NeuronTail.transform.position - player.transform.position).normalized;
+            direction = (NeuronTail.position - player.transform.position).normalized;
             player.transform.position += direction * speed;
             yield return new WaitForSeconds(0.01f);
         }

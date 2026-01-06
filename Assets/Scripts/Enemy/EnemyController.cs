@@ -58,12 +58,13 @@ public class EnemyController : MonoBehaviour
     }
 
     //전기마취
-    public void ElectricalAnesthesia()
+    public void GetShocked()
     {
         if (isEA == false)
         {
             isEA = true;
             isTargeted = false;
+            rb.simulated = false;
             Debug.Log(gameObject.name + "(이)가 전기마취 당함!");
             anim.SetTrigger("ElectricalAnesthesia");
         }

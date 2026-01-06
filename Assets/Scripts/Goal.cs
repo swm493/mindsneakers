@@ -17,7 +17,7 @@ public class Goal : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            player.StopMovement();
+            player.DisableMovement();
             Vortex = player.transform.Find("Vortex");
             StartCoroutine(ClearAnim(player));
         }

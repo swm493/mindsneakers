@@ -1,16 +1,17 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using System.Runtime.CompilerServices;
 
 public class PlayerController : MonoBehaviour
 {
     private bool isClearing = false;
     public bool onNeuron = false;
     private bool FMenable = true;
-    private bool onLMB = false;
     public int maxHealth = 10;
     public int currentHealth;
     private bool onDamageCooldown = false;
+    private Collider2D target = null;
 
     [SerializeField] private GameObject healthUI;
     [SerializeField] private GameObject spark;
@@ -19,7 +20,7 @@ public class PlayerController : MonoBehaviour
 
     private BoxCollider2D bc;
     private PlayerMove player;
-
+    private Rigidbody2D rb;
 
 
     private void Start()
@@ -34,6 +35,7 @@ public class PlayerController : MonoBehaviour
     {
         bc = GetComponent<BoxCollider2D>();
         player = GetComponent<PlayerMove>();
+        rb = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
     }
 
@@ -42,51 +44,97 @@ public class PlayerController : MonoBehaviour
         ElectricalAnesthesia();
     }
 
+    public void TakeDamage(int damage)
+    {
+        if (!onDamageCooldown)
+        {
+            currentHealth -= damage;
+            healthUI.GetComponent<HealthUI>().UpdateHealth();
+            StartCoroutine(DamageCooldown());
+            if (currentHealth <= 0)
+            {
+                currentHealth = 0;
+                Debug.Log("플레이어 사망");
+                //사망 처리
+            }
+        }
+    }
+    private IEnumerator DamageCooldown()
+    {
+        onDamageCooldown = true;
+        yield return new WaitForSeconds(0.5f);
+        onDamageCooldown = false;
+    }
+
 
     //전기 마취 (LMB)
     public void OnLMB(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            onLMB = true;
-        }
-        else if (context.canceled)
-        {
-            onLMB = false;
+            if (target != null)
+            {
+                target.GetComponent<EnemyController>().GetShocked();
+
+                StartCoroutine(player.EAAnimation());
+            }
         }
     }
     private void ElectricalAnesthesia()
     {
-        //마우스 주변 감지
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), 0.5f, LayerMask.GetMask("Enemy"));
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(mousePos, 0.5f, LayerMask.GetMask("Enemy"));
+        EnemyController ec;
 
+        float max_distance = 6f;
+        Vector2 enemyHeadPos = Vector2.zero;
+        Vector2 playerHeadPos = transform.position + new Vector3(0, bc.size.y * transform.localScale.y / 4f, 0);
+        Collider2D closest_enemy = null;
         foreach (Collider2D enemy in enemies)
         {
-            EnemyController ec = enemy.GetComponent<EnemyController>();
-            Vector2 enemyHeadPos = enemy.transform.position + new Vector3(0, enemy.GetComponent<BoxCollider2D>().size.y * enemy.transform.localScale.y / 4f, 0);
+            ec = enemy.GetComponent<EnemyController>();
+            if (ec.isEA) continue;
 
-            Vector2 headPos = transform.position + new Vector3(0, bc.size.y * transform.localScale.y / 4f, 0);
-            RaycastHit2D hit = Physics2D.Raycast(headPos, enemyHeadPos - headPos, Vector2.Distance(headPos, enemyHeadPos),
-                LayerMask.GetMask("Enemy", "Wall", "Ground"));
+            enemyHeadPos = enemy.transform.position + new Vector3(0, enemy.GetComponent<BoxCollider2D>().size.y * enemy.transform.localScale.y / 4f, 0);
+            float distance = Vector2.Distance(mousePos, enemyHeadPos);
+            if (max_distance > distance
+                && Vector2.Dot(ec.lookingDirection, playerHeadPos - enemyHeadPos) < 0)
+            {
+                max_distance = distance;
+                closest_enemy = enemy;
+            }
+        }
+        foreach (Collider2D enemy in enemies)
+        {
+            if (enemy != closest_enemy)
+                enemy.GetComponent<EnemyController>().isTargeted = false;
+        }
 
-            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy") //적과 플레이어 사이가 막히진 않았는가
-                    && Vector2.Dot(ec.lookingDirection, headPos - enemyHeadPos) < 0 // 적의 뒤에 플레이어가 있는가
-                    && Vector2.Distance(headPos, enemyHeadPos) <= 4.5f //적과의 거리
-                    && Mathf.Abs(headPos.y - enemyHeadPos.y) <= 2f //적과의 높이 차이
-                    && ec.isEA == false) //적이 전기마취 당하지 않았는가
-            {
-                ec.isTargeted = true;
-                GameManager.Instance.CursorInactive();
-                if (onLMB)
-                {
-                    ec.ElectricalAnesthesia();
-                }
-            }
-            else
-            {
-                ec.isTargeted = false;
-                GameManager.Instance.CursorActive();
-            }
+        if (closest_enemy == null)
+        {
+            target = null;
+            GameManager.Instance.CursorActive();
+            return;
+        }
+        
+        ec = closest_enemy.GetComponent<EnemyController>();
+        enemyHeadPos = closest_enemy.transform.position
+            + new Vector3(0, closest_enemy.GetComponent<BoxCollider2D>().size.y * closest_enemy.transform.localScale.y / 4f, 0);
+
+        RaycastHit2D hit = Physics2D.Raycast(playerHeadPos, enemyHeadPos - playerHeadPos, Vector2.Distance(playerHeadPos, enemyHeadPos),
+            LayerMask.GetMask("Enemy", "Wall", "Ground"));
+
+        if (hit.collider == closest_enemy)
+        {
+            ec.isTargeted = true;
+            GameManager.Instance.CursorInactive();
+            target = closest_enemy;
+        }
+        else
+        {
+            ec.isTargeted = false;
+            GameManager.Instance.CursorActive();
+            target = null;
         }
     }
 
@@ -96,7 +144,7 @@ public class PlayerController : MonoBehaviour
     {
         if (context.performed)
         {
-            Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position, bc.size * transform.localScale, 0);
+            Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position, 0.95f * new Vector3(1, 2, 1), 0);
             foreach (Collider2D collider in colliders)
             {
                 if (collider.gameObject.layer == LayerMask.NameToLayer("Goal") && !isClearing) //마음의 핵
@@ -137,69 +185,6 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-
-
-    //코르티솔 (적 자취 드러내기) (F)
-    public void OnCortisol(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            Debug.Log("코르티솔");
-        }
-    }
-
-
-    //스테이지 특수 스킬 (E)
-    public void OnSpecialSkill(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            switch (GameManager.Instance.stageNumber)
-            {
-                case 1:
-                    ChocolateBomb();
-                    break;
-                default:
-                    Debug.LogWarning("스테이지 넘버에 맞는 특수 스킬이 없음");
-                    break;
-            }
-        }
-    }
-    private void ChocolateBomb()
-    {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 4f);
-        foreach (Collider2D collider in colliders)
-        {
-            if (collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
-            {
-                collider.GetComponent<EnemyController>().EatingChocolate();
-            }
-        }
-    }
-    
-    public void TakeDamage(int damage)
-    {
-        if (!onDamageCooldown)
-        {
-            currentHealth -= damage;
-            healthUI.GetComponent<HealthUI>().UpdateHealth();
-            StartCoroutine(DamageCooldown());
-            if (currentHealth <= 0)
-            {
-                currentHealth = 0;
-                Debug.Log("플레이어 사망");
-                //사망 처리
-            }
-        }
-    }
-
-    private IEnumerator DamageCooldown()
-    {
-        onDamageCooldown = true;
-        yield return new WaitForSeconds(0.5f);
-        onDamageCooldown = false;
-    }
-
     private IEnumerator FeelMind()
     {
         float passedTime = 0f;
@@ -250,5 +235,57 @@ public class PlayerController : MonoBehaviour
         FMenable = false;
         yield return new WaitForSeconds(1f);
         FMenable = true;
+    }
+
+
+    //코르티솔 (적 자취 드러내기) (F)
+    public void OnCortisol(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            Debug.Log("코르티솔");
+        }
+    }
+
+
+    //스테이지 특수 스킬 (E)
+    public void OnSpecialSkill(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            switch (GameManager.Instance.stageNumber)
+            {
+                case 1:
+                    ChocolateBomb();
+                    break;
+                default:
+                    Debug.LogWarning("스테이지 넘버에 맞는 특수 스킬이 없음");
+                    break;
+            }
+        }
+    }
+
+    private void ChocolateBomb()
+    {
+        GetComponent<Animator>().SetTrigger("ChocolateBomb");
+        StartCoroutine(CBAnim());
+
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 4f);
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+            {
+                collider.GetComponent<EnemyController>().EatingChocolate();
+            }
+        }
+    }
+    private IEnumerator CBAnim()
+    {
+        rb.gravityScale = 0f;
+        rb.linearVelocity = Vector2.zero;
+        player.DisableMovement();
+        yield return new WaitForSeconds(1f);
+        rb.gravityScale = GameManager.Instance.gravityScale;
+        player.EnableMovement();
     }
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using NUnit.Framework;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -19,17 +20,15 @@ public class PlayerMove : MonoBehaviour
     private bool isUpping = false;
     private bool isDowning = false;
     private bool isDashing = false;
-    private bool Dashenable = true;
+    private bool dashEnabled = true;
 
     public Rigidbody2D rb;
-    private SpriteRenderer sr;
     public BoxCollider2D bc;
     public Animator anim;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        sr = GetComponent<SpriteRenderer>();
         bc = GetComponent<BoxCollider2D>();
         anim = GetComponent<Animator>();
     }
@@ -43,8 +42,8 @@ public class PlayerMove : MonoBehaviour
     {
         //바닥 체크
         if (Physics2D.OverlapBox(transform.position - new Vector3(0, bc.size.y * transform.localScale.y / 2, 0),
-                    new Vector3(bc.size.x * transform.localScale.x * 0.95f, 0.05f, 0), 0, LayerMask.GetMask("Ground", "Platform")))
-                    //원점 : 플레이어의 발, 크기 : 가로는 플레이어 크기의 0.9배, 세로는 0.1칸
+                    new Vector3(0.95f, 0.1f, 0), 0, LayerMask.GetMask("Ground", "Platform")))
+                    //원점 : 플레이어의 발, 크기 : 가로는 0.95칸, 세로는 0.1칸
         {
             onGround = true;
             if (Mathf.Abs(rb.linearVelocityY) < 0.1f) currentJumpCount = maxJumpCount;
@@ -57,7 +56,7 @@ public class PlayerMove : MonoBehaviour
 
         //사다리 체크
         if (Physics2D.OverlapBox(transform.position - new Vector3(0, bc.size.y * transform.localScale.y * 0.1f, 0),
-                    bc.size * transform.localScale * 0.75f, 0, LayerMask.GetMask("Ladder")))
+                    0.7f * new Vector3(1, 2, 1), 0, LayerMask.GetMask("Ladder")))
                     //원점 : 플레이어의 0.1배 크기 아래, 크기 : 플레이어 크기의 0.75배
         {
             onLadder = true;
@@ -71,7 +70,15 @@ public class PlayerMove : MonoBehaviour
         //이동하기 & 애니메이션
         if (moveEnabled)
         {
-            if (!isDashing) rb.linearVelocityX = moveVector.x * speed * (isClimbing ? 0.7f : 1f);
+            if (!isDashing) 
+            {
+                if (onGround)
+                    rb.linearVelocityX = moveVector.x * speed;
+                else if (isClimbing)
+                    rb.linearVelocityX = moveVector.x * speed * 0.7f;
+                else if (!onGround)
+                    rb.linearVelocityX = Mathf.MoveTowards(rb.linearVelocityX, moveVector.x * speed, 20f * Time.fixedDeltaTime);
+            }
             PlayerAnimation();
         }
 
@@ -83,15 +90,15 @@ public class PlayerMove : MonoBehaviour
     private void PlayerAnimation() //moveEnabled가 true일 때만 호출
     {
         if (moveVector.x > 0) //좌우반전
-            sr.flipX = false;
+            transform.localScale = new Vector3(7, 7, 7);
         else if (moveVector.x < 0)
-            sr.flipX = true;
+            transform.localScale = new Vector3(-7, 7, 7);
 
         if (Mathf.Abs(moveVector.x) > 0.01f) //걷기 애니메이션
             anim.SetBool("IsMoving", true);
         else
             anim.SetBool("IsMoving", false);
-
+        
         if (isClimbing) //사다리 애니메이션
         {
             if (isUpping && isDowning)
@@ -121,11 +128,14 @@ public class PlayerMove : MonoBehaviour
         else //추락 애니메이션
         {
             if (rb.linearVelocityY < -0.1f && !onGround)
+            {
                 anim.SetBool("IsFalling", true);
+            }
             else
+            {
                 anim.SetBool("IsFalling", false);
+            }
         }
-        
     }
 
 
@@ -143,8 +153,8 @@ public class PlayerMove : MonoBehaviour
         {
             if (isDowning) //플랫폼 아래로 점프
             {
-                Collider2D platform = Physics2D.OverlapBox(transform.position - new Vector3(0, bc.size.y * transform.localScale.y, 0) / 2,
-                            new Vector3(bc.size.x * transform.localScale.x, 0.1f, 0), 0, LayerMask.GetMask("Platform"));
+                Collider2D platform = Physics2D.OverlapBox(transform.position - new Vector3(0, bc.size.y * transform.localScale.y / 2, 0),
+                            new Vector3(bc.size.x * Mathf.Abs(transform.localScale.x), 0.1f, 0), 0, LayerMask.GetMask("Platform"));
                 if (platform)
                     StartCoroutine(DropfromPlatform(platform));
             }
@@ -218,7 +228,7 @@ public class PlayerMove : MonoBehaviour
     {
         if (context.performed && moveEnabled)
         {
-            if (Dashenable)
+            if (dashEnabled && moveEnabled)
             {
                 if (isClimbing)
                     OffLadder();
@@ -234,19 +244,19 @@ public class PlayerMove : MonoBehaviour
         StartCoroutine(DashTimer());
         rb.gravityScale = 0f;
         rb.linearVelocityY = 0f;
-        if (sr.flipX)
-            rb.linearVelocityX = -15f;
-        else
+        if (transform.localScale.x > 0)
             rb.linearVelocityX = 15f;
-        yield return new WaitForSeconds(0.2f);
+        else if (transform.localScale.x < 0)
+            rb.linearVelocityX = -15f;
+        yield return new WaitForSeconds(onGround ? 0.2f : 0.1f);
         rb.gravityScale = GameManager.Instance.gravityScale;
         isDashing = false;
     }
     private IEnumerator DashTimer()
     {
-        Dashenable = false;
+        dashEnabled = false;
         yield return new WaitForSeconds(dashCool);
-        Dashenable = true;
+        dashEnabled = true;
     }
 
 
@@ -267,10 +277,16 @@ public class PlayerMove : MonoBehaviour
         anim.SetBool("IsClimbing", false);
     }
 
-    public void StopMovement() //이동 정지
+    public void DisableMovement() //이동 정지
     {
-        moveVector = Vector2.zero;
         rb.linearVelocityX = 0;
+        moveEnabled = false;
+    }
+
+    public void StopMovement()
+    {
+        rb.linearVelocity = Vector2.zero;
+        rb.gravityScale = 0;
         moveEnabled = false;
     }
 
@@ -279,5 +295,33 @@ public class PlayerMove : MonoBehaviour
         rb.gravityScale = GameManager.Instance.gravityScale;
         bc.enabled = true;
         moveEnabled = true;
+    }
+
+    public IEnumerator EAAnimation()
+    {
+        Vector2 init_velocity = rb.linearVelocity;
+        StopMovement();
+
+        bool sameDirection = (Camera.main.ScreenToWorldPoint(Input.mousePosition).x - transform.position.x) * transform.localScale.x > 0 ? true : false;
+        anim.SetBool("SameDirection", sameDirection);
+        if (onGround == false)
+        {
+            Debug.Log(sameDirection ? "공중 정방향 쏘기" : "공중 반대로 쏘기");
+            anim.SetTrigger("ShootOnAir");
+        }
+        else if (moveVector.x != 0)
+        {
+            Debug.Log(sameDirection ? "이동 정방향 쏘기" : "이동 반대로 쏘기");
+            anim.SetTrigger("ShootOnMove");
+        }
+        else
+        {
+            Debug.Log(sameDirection ? "정지 정방향 쏘기" : "정지 반대로 쏘기");
+            anim.SetTrigger("ShootOnIdle");
+        }
+
+        yield return new WaitForSeconds(0.5f);
+        rb.linearVelocity = init_velocity;
+        EnableMovement();
     }
 }
