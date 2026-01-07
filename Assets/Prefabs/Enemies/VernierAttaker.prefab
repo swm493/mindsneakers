@@ -613,7 +613,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 41
+  m_SortingOrder: 21
   m_MaskInteraction: 0
   m_Sprite: {fileID: -8737704298123837536, guid: 19b8f1e3ca01ea047b96c7b18abbbdce, type: 3}
   m_Color: {r: 0.7651671, g: 1, b: 0, a: 1}
@@ -789,7 +789,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 40
+  m_SortingOrder: 20
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2425068948780354478, guid: 30e5be21e6f989b4f84713160d124180, type: 3}
   m_Color: {r: 1, g: 0.9470248, b: 0, a: 1}
@@ -866,7 +866,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2048
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -930,7 +930,10 @@ MonoBehaviour:
   aggroGaugeBar: {fileID: 6950235702920617119}
   defMechType: 0
   moveSpeed: 3
-  SightRange: 5
+  sightRange: 3.5
+  isSleeping: 0
+  isWanderingType: 0
+  destinations: []
 --- !u!114 &6736429300040958112
 MonoBehaviour:
   m_ObjectHideFlags: 0

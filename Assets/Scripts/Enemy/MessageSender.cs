@@ -42,8 +42,8 @@ public class MessageSender : MonoBehaviour
         rb.linearVelocityY = 10f;
         yield return new WaitForSeconds(1f);
         if (ec.isEA) yield break;
-        ec.lookingDirection = new Vector2 (ec.SightXInt(), 0f);
-        rb.linearVelocityX = 5f * ec.SightXInt();
+        ec.lookingDirection = new Vector2(-ec.SightXInt(), 0f);
+        rb.linearVelocityX = 7f * ec.SightXInt();
         yield return new WaitForSeconds(1f);
         rb.linearVelocityX = 0f;
         if (ec.isEA) yield break;

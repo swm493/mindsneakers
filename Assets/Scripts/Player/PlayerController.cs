@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     private bool isClearing = false;
     public bool onNeuron = false;
+    public bool isInterationing = false;
     private bool FMenable = true;
     public int maxHealth = 10;
     public int currentHealth;
@@ -18,7 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject feelMindPrefab;
     [SerializeField] private Transform goalTransform;
 
-    private BoxCollider2D bc;
+    private CapsuleCollider2D cc;
     private PlayerMove player;
     private Rigidbody2D rb;
 
@@ -33,7 +34,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        bc = GetComponent<BoxCollider2D>();
+        cc = GetComponent<CapsuleCollider2D>();
         player = GetComponent<PlayerMove>();
         rb = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
@@ -88,7 +89,7 @@ public class PlayerController : MonoBehaviour
 
         float max_distance = 6f;
         Vector2 enemyHeadPos = Vector2.zero;
-        Vector2 playerHeadPos = transform.position + new Vector3(0, bc.size.y * transform.localScale.y / 4f, 0);
+        Vector2 playerHeadPos = transform.position + new Vector3(0, cc.size.y * transform.localScale.y / 4f, 0);
         Collider2D closest_enemy = null;
         foreach (Collider2D enemy in enemies)
         {
@@ -149,7 +150,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (collider.gameObject.layer == LayerMask.NameToLayer("Goal") && !isClearing) //마음의 핵
                 {
-                    collider.GetComponent<Goal>().GameClear(bc, player);
+                    collider.GetComponent<Goal>().GameClear(cc, player);
                     isClearing = true;
                 }
                 else if (collider.gameObject.layer == LayerMask.NameToLayer("NeuronHead") && !onNeuron) //뉴런

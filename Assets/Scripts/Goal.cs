@@ -26,7 +26,7 @@ public class Goal : MonoBehaviour
     private IEnumerator ClearAnim(PlayerMove player)
     {
         player.rb.gravityScale = 0f;
-        player.bc.enabled = false;
+        player.cc.enabled = false;
         player.rb.linearVelocityY = 0.2f;
         for (int i = 0; i < 40; i++)
         {

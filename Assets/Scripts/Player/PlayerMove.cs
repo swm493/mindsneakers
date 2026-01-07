@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
-using NUnit.Framework;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -14,8 +13,9 @@ public class PlayerMove : MonoBehaviour
     // 상태 변수
     private bool moveEnabled = true;
     public int currentJumpCount = 0;
-    private bool onGround = false;
-    private bool onLadder = false;
+    [SerializeField]private bool onGround = false;
+    public bool onLadder = false;
+    public bool onBush = false;
     private bool isClimbing = false;
     private bool isUpping = false;
     private bool isDowning = false;
@@ -23,13 +23,13 @@ public class PlayerMove : MonoBehaviour
     private bool dashEnabled = true;
 
     public Rigidbody2D rb;
-    public BoxCollider2D bc;
+    public CapsuleCollider2D cc;
     public Animator anim;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        bc = GetComponent<BoxCollider2D>();
+        cc = GetComponent<CapsuleCollider2D>();
         anim = GetComponent<Animator>();
     }
 
@@ -41,12 +41,12 @@ public class PlayerMove : MonoBehaviour
     private void FixedUpdate()
     {
         //바닥 체크
-        if (Physics2D.OverlapBox(transform.position - new Vector3(0, bc.size.y * transform.localScale.y / 2, 0),
+        if (Physics2D.OverlapBox(transform.position - new Vector3(0, cc.size.y * transform.localScale.y / 2, 0),
                     new Vector3(0.95f, 0.1f, 0), 0, LayerMask.GetMask("Ground", "Platform")))
                     //원점 : 플레이어의 발, 크기 : 가로는 0.95칸, 세로는 0.1칸
         {
             onGround = true;
-            if (Mathf.Abs(rb.linearVelocityY) < 0.1f) currentJumpCount = maxJumpCount;
+            if (Mathf.Abs(rb.linearVelocityY) < 0.11f) currentJumpCount = maxJumpCount;
         }
         else
         {
@@ -55,9 +55,9 @@ public class PlayerMove : MonoBehaviour
         anim.SetBool("OnGround", onGround);
 
         //사다리 체크
-        if (Physics2D.OverlapBox(transform.position - new Vector3(0, bc.size.y * transform.localScale.y * 0.1f, 0),
+        if (Physics2D.OverlapBox(transform.position - new Vector3(0, cc.size.y * transform.localScale.y * 0.1f, 0),
                     0.7f * new Vector3(1, 2, 1), 0, LayerMask.GetMask("Ladder")))
-                    //원점 : 플레이어의 0.1배 크기 아래, 크기 : 플레이어 크기의 0.75배
+                    //원점 : 플레이어의 0.1배 크기 아래, 크기 : 플레이어 크기의 0.7배
         {
             onLadder = true;
         }
@@ -66,6 +66,9 @@ public class PlayerMove : MonoBehaviour
             onLadder = false;
             if (isClimbing && moveEnabled) OffLadder();
         }
+
+        //엄폐물 체크
+        onBush = Physics2D.OverlapBox(transform.position, new Vector3(0.9f, 1.8f, 1), 0, LayerMask.GetMask("Bush")) != null;
 
         //이동하기 & 애니메이션
         if (moveEnabled)
@@ -153,10 +156,10 @@ public class PlayerMove : MonoBehaviour
         {
             if (isDowning) //플랫폼 아래로 점프
             {
-                Collider2D platform = Physics2D.OverlapBox(transform.position - new Vector3(0, bc.size.y * transform.localScale.y / 2, 0),
-                            new Vector3(bc.size.x * Mathf.Abs(transform.localScale.x), 0.1f, 0), 0, LayerMask.GetMask("Platform"));
-                if (platform)
-                    StartCoroutine(DropfromPlatform(platform));
+                Collider2D[] platforms = Physics2D.OverlapBoxAll(transform.position - new Vector3(0, cc.size.y * transform.localScale.y / 2, 0),
+                            new Vector3(cc.size.x * Mathf.Abs(transform.localScale.x), 0.1f, 0), 0, LayerMask.GetMask("Platform"));
+                if (platforms.Length != 0)
+                    StartCoroutine(DropfromPlatform(platforms));
             }
             else if (isClimbing) //사다리에서 내리기
             {
@@ -175,15 +178,15 @@ public class PlayerMove : MonoBehaviour
             }
         }
     }
-    private IEnumerator DropfromPlatform(Collider2D platform) //플랫폼에서 떨어지기
+    private IEnumerator DropfromPlatform(Collider2D[] platforms) //플랫폼에서 떨어지기
     {
         float init_pos = transform.position.y;
-        Physics2D.IgnoreCollision(bc, platform, true);
+        foreach (Collider2D platform in platforms) Physics2D.IgnoreCollision(cc, platform, true);
         while (true)
         {
-            if (init_pos - transform.position.y > bc.size.y * transform.localScale.y / 2)
+            if (init_pos - transform.position.y > cc.size.y * transform.localScale.y / 2)
             {
-                Physics2D.IgnoreCollision(bc, platform, false);
+                foreach (Collider2D platform in platforms) Physics2D.IgnoreCollision(cc, platform, false);
                 break;
             }
             yield return null;
@@ -293,7 +296,7 @@ public class PlayerMove : MonoBehaviour
     public void EnableMovement() //이동 활성화
     {
         rb.gravityScale = GameManager.Instance.gravityScale;
-        bc.enabled = true;
+        cc.enabled = true;
         moveEnabled = true;
     }
 

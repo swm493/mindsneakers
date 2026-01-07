@@ -5,10 +5,12 @@ using System.Collections;
 public class AcidParticle : MonoBehaviour
 {
     private Animator anim;
+    private Rigidbody2D rb;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
@@ -22,7 +24,9 @@ public class AcidParticle : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground")
+            || collision.gameObject.layer == LayerMask.NameToLayer("Platform")
+            && Mathf.Abs(rb.linearVelocityY) < 0.1f)
         {
             StartCoroutine(Destroy());
         }

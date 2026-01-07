@@ -54,6 +54,7 @@ public class DefMechanism : MonoBehaviour
     private void AttackSystem()
     {
         Collider2D player = Physics2D.OverlapCircle(transform.position, 15f, LayerMask.GetMask("Player"));
+        if(player != null && player.GetComponent<PlayerController>().isInterationing) return;
         if (aggroGauge > 0)
         {
             if (!isAttacking) //따라다니기
@@ -119,15 +120,13 @@ public class DefMechanism : MonoBehaviour
                     rb.linearVelocityX = 0;
                     aggroGauge = 0;
                     ec.lookingDirection = new Vector2 (ec.SightXInt(), 0);
-                    StartCoroutine(WanderingSystem());
+                    if(isWanderingType) StartCoroutine(WanderingSystem());
                 }
             }
         }
         else if (aggroGauge <= 0)
         {
-            if (IsInSight()
-            || (player != null && Mathf.Abs(player.transform.position.x - transform.position.x) < 1.3f 
-                && Mathf.Abs(player.transform.position.y - transform.position.y) < 0.5f))
+            if (IsInSight())
             {
                 StartFollowing();
             }
@@ -176,6 +175,7 @@ public class DefMechanism : MonoBehaviour
         Debug.DrawRay(transform.position, ec.lookingDirection * sightRange, Color.red);
         
         return player.collider != null && player.collider.gameObject.CompareTag("Player")
-                && Mathf.Abs(player.transform.position.y - transform.position.y) < 6f;
+                && Mathf.Abs(player.transform.position.y - transform.position.y) < 6f
+                && player.collider.GetComponent<PlayerMove>().onBush == false;
     }
 }
