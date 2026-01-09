@@ -1,20 +1,30 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
-using System.Runtime.CompilerServices;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     private bool isClearing = false;
     public bool onNeuron = false;
     public bool isInterationing = false;
-    private bool FMenable = true;
-    public int maxHealth = 10;
-    public int currentHealth;
-    private bool onDamageCooldown = false;
+    private int maxEgo = 10;
+    private int currentEgo;
+    private int maxHRM = 5;
+    private int currentHRM;
+    private bool onDamageCool = false;
+    private bool onSpecialSkillCool = false;
+    private bool onEACool = false;
+    private bool onCortisolCool = false;
+    private bool onFMCool = false;
     private Collider2D target = null;
 
-    [SerializeField] private GameObject healthUI;
+    [SerializeField] private Image egoUI;
+    [SerializeField] private Image hormoneUI;
+    [SerializeField] private Image specialSkillUI;
+    [SerializeField] private Image electroAnestheisaUI;
+    [SerializeField] private Image cortisolUI;
+    [SerializeField] private Image feelMindUI;
     [SerializeField] private GameObject spark;
     [SerializeField] private GameObject feelMindPrefab;
     [SerializeField] private Transform goalTransform;
@@ -37,7 +47,16 @@ public class PlayerController : MonoBehaviour
         cc = GetComponent<CapsuleCollider2D>();
         player = GetComponent<PlayerMove>();
         rb = GetComponent<Rigidbody2D>();
-        currentHealth = maxHealth;
+
+        currentEgo = maxEgo;
+        currentHRM = maxHRM;
+
+        egoUI.fillAmount = (float) currentEgo / maxEgo;
+        hormoneUI.fillAmount = (float) currentHRM / maxHRM;
+        specialSkillUI.fillAmount = 0f;
+        electroAnestheisaUI.fillAmount = 0f;
+        cortisolUI.fillAmount = 0f;
+        feelMindUI.fillAmount = 0f;
     }
 
     private void Update()
@@ -47,14 +66,14 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (!onDamageCooldown)
+        if (!onDamageCool)
         {
-            currentHealth -= damage;
-            healthUI.GetComponent<HealthUI>().UpdateHealth();
+            currentEgo -= damage;
+            egoUI.fillAmount = (float) currentEgo / maxEgo;
             StartCoroutine(DamageCooldown());
-            if (currentHealth <= 0)
+            if (currentEgo <= 0)
             {
-                currentHealth = 0;
+                currentEgo = 0;
                 Debug.Log("플레이어 사망");
                 //사망 처리
             }
@@ -62,9 +81,9 @@ public class PlayerController : MonoBehaviour
     }
     private IEnumerator DamageCooldown()
     {
-        onDamageCooldown = true;
+        onDamageCool = true;
         yield return new WaitForSeconds(0.5f);
-        onDamageCooldown = false;
+        onDamageCool = false;
     }
 
 
@@ -73,11 +92,12 @@ public class PlayerController : MonoBehaviour
     {
         if (context.performed)
         {
-            if (target != null)
+            if (target != null && !onEACool)
             {
                 target.GetComponent<EnemyController>().GetShocked();
 
                 StartCoroutine(player.EAAnimation());
+                StartCoroutine(EATimer());
             }
         }
     }
@@ -88,7 +108,7 @@ public class PlayerController : MonoBehaviour
         EnemyController ec;
 
         float max_distance = 6f;
-        Vector2 enemyHeadPos = Vector2.zero;
+        Vector2 enemyHeadPos;
         Vector2 playerHeadPos = transform.position + new Vector3(0, cc.size.y * transform.localScale.y / 4f, 0);
         Collider2D closest_enemy = null;
         foreach (Collider2D enemy in enemies)
@@ -138,12 +158,22 @@ public class PlayerController : MonoBehaviour
             target = null;
         }
     }
+    private IEnumerator EATimer()
+    {
+        onEACool = true;
+        for (int i = 0; i < 100 ; i  ++)
+        {
+            electroAnestheisaUI.fillAmount = 1 - (float) i / 99;
+            yield return new WaitForSeconds(0.02f);
+        }
+        onEACool = false;
+    }
 
 
     //들어가기 (W)
     public void OnEnter(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && !player.isDashing)
         {
             Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position, 0.95f * new Vector3(1, 2, 1), 0);
             foreach (Collider2D collider in colliders)
@@ -168,21 +198,14 @@ public class PlayerController : MonoBehaviour
     {
         if (context.performed)
         {
-            if (goalTransform != null)
-            {
-                if (FMenable)
-                {
-                    StartCoroutine(FeelMind());
-                    StartCoroutine(FMTimer());
-                }
-                else
-                {
-                    Debug.Log("정신 감정 쿨타임...");
-                }
-            }
-            else
+            if (goalTransform == null)
             {
                 Debug.LogWarning("플레이어 컨트롤러에 출구를 설정해주세요.");
+            }
+            else if (!onFMCool)
+            {
+                StartCoroutine(FeelMind());
+                StartCoroutine(FMTimer());
             }
         }
     }
@@ -208,62 +231,102 @@ public class PlayerController : MonoBehaviour
 
         for (float i = 0; i < 1f; i += Time.deltaTime * 2f)
         {
-            FM_sr.color = new Color(1f, 1f, 1f, Mathf.Lerp(0f, 1f, i));
+            FM_sr.color = new Color(0, 1f, 0.95f, Mathf.Lerp(0f, 1f, i));
             yield return null;
         }
         for (int i = 0; i < 5; i++)
         {
             for (float j = 0; j < 1f; j += Time.deltaTime * 2f)
             {
-                FM_sr.color = new Color(1f, 1f, 1f, Mathf.Lerp(1f, 0.6f, j));
+                FM_sr.color = new Color(0, 1f, 0.95f, Mathf.Lerp(1f, 0.6f, j));
                 yield return null;
             }
             for (float j = 0; j < 1f; j += Time.deltaTime * 2f)
             {
-                FM_sr.color = new Color(1f, 1f, 1f, Mathf.Lerp(0.6f, 1f, j));
+                FM_sr.color = new Color(0, 1f, 0.95f, Mathf.Lerp(0.6f, 1f, j));
                 yield return null;
             }
         }
         for (float i = 0; i < 1f; i += Time.deltaTime * 2f)
         {
-            FM_sr.color = new Color(1f, 1f, 1f, Mathf.Lerp(1f, 0f, i));
+            FM_sr.color = new Color(0, 1f, 0.95f, Mathf.Lerp(1f, 0f, i));
             yield return null;
         }
         Destroy(feelMindParticle);
     }
     private IEnumerator FMTimer()
     {
-        FMenable = false;
-        yield return new WaitForSeconds(1f);
-        FMenable = true;
+        onFMCool = true;
+        for (int i = 0; i < 100 ; i  ++)
+        {
+            feelMindUI.fillAmount = 1 - (float) i / 99;
+            yield return new WaitForSeconds(0.05f);
+        }
+        onFMCool = false;
     }
 
 
     //코르티솔 (적 자취 드러내기) (F)
     public void OnCortisol(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && !onCortisolCool)
         {
-            Debug.Log("코르티솔");
+            Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, 13f, LayerMask.GetMask("Enemy"));
+            foreach (Collider2D enemy in enemies)
+            {
+                if(enemy.GetComponent<DefMechanism>() != null) StartCoroutine(enemy.GetComponent<DefMechanism>().ShowCortisol());
+            }
+            StartCoroutine(CortisolTimer());
         }
+    }
+    private IEnumerator CortisolTimer()
+    {
+        onCortisolCool = true;
+        for (int i = 0; i < 100 ; i  ++)
+        {
+            cortisolUI.fillAmount = 1 - (float) i / 99;
+            yield return new WaitForSeconds(0.05f);
+        }
+        onCortisolCool = false;
     }
 
 
     //스테이지 특수 스킬 (E)
     public void OnSpecialSkill(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && !onSpecialSkillCool)
         {
-            switch (GameManager.Instance.stageNumber)
+            if (currentHRM > 0)
             {
-                case 1:
-                    ChocolateBomb();
-                    break;
-                default:
-                    Debug.LogWarning("스테이지 넘버에 맞는 특수 스킬이 없음");
-                    break;
+                currentHRM--;
+                switch (GameManager.Instance.stageNumber)
+                {
+                    case 1:
+                        ChocolateBomb();
+                        StartCoroutine(SpecialSkillTimer(5f));
+                        break;
+                    default:
+                        Debug.LogWarning("스테이지 넘버에 맞는 특수 스킬이 없음");
+                        currentHRM++;
+                        break;
+                }
+                hormoneUI.fillAmount = (float) currentHRM / maxHRM;
+            }
+            else
+            {
+                Debug.Log("호르몬 부족");
             }
         }
+    }
+    private IEnumerator SpecialSkillTimer(float time)
+    {
+        onSpecialSkillCool = true;
+        for (int i = 0; i < 100 ; i  ++)
+        {
+            specialSkillUI.fillAmount = 1 - (float) i / 99;
+            yield return new WaitForSeconds(time / 100f);
+        }
+        onSpecialSkillCool = false;
     }
 
     private void ChocolateBomb()

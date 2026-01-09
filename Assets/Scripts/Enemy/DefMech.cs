@@ -13,6 +13,7 @@ public class DefMechanism : MonoBehaviour
     public bool attackEnabled = true;
     [SerializeField] private Collider2D startAttack;
     [SerializeField] private Image aggroGaugeBar;
+    [SerializeField] private GameObject cortisolPrefab;
 
     /****************HyperParameters*****************/
     [SerializeField] private DefMechType defMechType;
@@ -177,5 +178,55 @@ public class DefMechanism : MonoBehaviour
         return player.collider != null && player.collider.gameObject.CompareTag("Player")
                 && Mathf.Abs(player.transform.position.y - transform.position.y) < 6f
                 && player.collider.GetComponent<PlayerMove>().onBush == false;
+    }
+
+    public IEnumerator ShowCortisol()
+    {
+        Debug.Log("Cortisol Showed");
+        for (int i = 0; i < destinations.Length - 1; i++)
+        {
+            float passedTime = 0f;
+            Vector3 destinationDir = (destinations[i + 1].position - destinations[i].position).normalized;
+            Vector3 cortisolPos = destinations[i].position;
+
+            while (Vector3.Distance(cortisolPos, destinations[i + 1].position) > 0.7f)
+            {
+                StartCoroutine(CortisolParticle(cortisolPos, destinationDir));
+                passedTime += Time.deltaTime;
+                cortisolPos += destinationDir * 1.5f;
+                yield return new WaitForSeconds(0.15f);
+            }
+            StartCoroutine(CortisolParticle(cortisolPos, destinationDir));
+        }
+    }
+    private IEnumerator CortisolParticle(Vector3 cortisolPosition, Vector3 destinationDir)
+    {
+        GameObject cortisolParticle = Instantiate(cortisolPrefab, cortisolPosition, Quaternion.identity);
+        cortisolParticle.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(destinationDir.y, destinationDir.x) * Mathf.Rad2Deg);
+        SpriteRenderer cortisol_sr = cortisolParticle.GetComponent<SpriteRenderer>();
+        for (float i = 0; i < 1f; i += Time.deltaTime * 2f)
+        {
+            cortisol_sr.color = new Color(0.97f, 0.92f, 0, Mathf.Lerp(0f, 1f, i));
+            yield return null;
+        }
+        for (int i = 0; i < 5; i++)
+        {
+            for (float j = 0; j < 1f; j += Time.deltaTime * 2f)
+            {
+                cortisol_sr.color = new Color(0.97f, 0.92f, 0, Mathf.Lerp(1f, 0.6f, j));
+                yield return null;
+            }
+            for (float j = 0; j < 1f; j += Time.deltaTime * 2f)
+            {
+                cortisol_sr.color = new Color(0.97f, 0.92f, 0, Mathf.Lerp(0.6f, 1f, j));
+                yield return null;
+            }
+        }
+        for (float i = 0; i < 1f; i += Time.deltaTime * 2f)
+        {
+            cortisol_sr.color = new Color(0.97f, 0.92f, 0, Mathf.Lerp(1f, 0f, i));
+            yield return null;
+        }
+        Destroy(cortisolParticle);
     }
 }

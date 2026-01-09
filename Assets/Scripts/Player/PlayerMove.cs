@@ -19,7 +19,7 @@ public class PlayerMove : MonoBehaviour
     private bool isClimbing = false;
     private bool isUpping = false;
     private bool isDowning = false;
-    private bool isDashing = false;
+    public bool isDashing = false;
     private bool dashEnabled = true;
 
     public Rigidbody2D rb;

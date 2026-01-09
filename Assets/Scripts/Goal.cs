@@ -28,9 +28,11 @@ public class Goal : MonoBehaviour
         player.rb.gravityScale = 0f;
         player.cc.enabled = false;
         player.rb.linearVelocityY = 0.2f;
+        int sightRight = player.transform.localScale.x > 0 ? 1 : -1;
+
         for (int i = 0; i < 40; i++)
         {
-            player.transform.localScale -= 0.1f * Vector3.one;
+            player.transform.localScale -= 0.1f * new Vector3(sightRight, 1, 1);
             Vortex.localScale += 0.01f * Vector3.one;
             yield return new WaitForSeconds(0.05f);
         }

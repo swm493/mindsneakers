@@ -218,7 +218,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 5544160554672128994, guid: e4e84f83c866067449dd1cf391dcf409, type: 3}
+  m_Sprite: {fileID: 7482667652216324306, guid: 169af4dd7470711448f5dc9b9d5cbd6f, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -725,6 +725,7 @@ MonoBehaviour:
   attackEnabled: 1
   startAttack: {fileID: 8957099783814595193}
   aggroGaugeBar: {fileID: 9061829965031604550}
+  cortisolPrefab: {fileID: 6290147855330923290, guid: 8505e08b9768d0a49afd320cfd451ef9, type: 3}
   defMechType: 3
   moveSpeed: 3
   sightRange: 3.5
