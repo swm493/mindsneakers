@@ -51,7 +51,7 @@ public class BeamShooter : MonoBehaviour
         rb.linearVelocityX = 0f;
         if (ec.isEA) yield break;
 
-        RaycastHit2D hit = Physics2D.Raycast(player.transform.position + new Vector3(0, 5f, 0), Vector2.down, Mathf.Infinity, LayerMask.GetMask("Ground", "Platform"));
+        RaycastHit2D hit = Physics2D.Raycast(player.transform.position + new Vector3(0, 2f, 0), Vector2.down, Mathf.Infinity, LayerMask.GetMask("Ground", "Platform"));
         GameObject beam = Instantiate(beamPrefab, hit.point + new Vector2(0, 3.5f), Quaternion.identity);
         SpriteRenderer sr = beam.GetComponent<SpriteRenderer>();
         StartCoroutine(HitByBeam(player, beam));

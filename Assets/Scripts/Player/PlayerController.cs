@@ -19,12 +19,13 @@ public class PlayerController : MonoBehaviour
     private bool onFMCool = false;
     private Collider2D target = null;
 
-    [SerializeField] private Image egoUI;
-    [SerializeField] private Image hormoneUI;
-    [SerializeField] private Image specialSkillUI;
-    [SerializeField] private Image electroAnestheisaUI;
-    [SerializeField] private Image cortisolUI;
-    [SerializeField] private Image feelMindUI;
+    private Image egoUI;
+    private Image hormoneUI;
+    private Image specialSkillUI;
+    private Image electroAnestheisaUI;
+    private Image cortisolUI;
+    private Image feelMindUI;
+
     [SerializeField] private GameObject spark;
     [SerializeField] private GameObject feelMindPrefab;
     [SerializeField] private Transform goalTransform;
@@ -50,6 +51,13 @@ public class PlayerController : MonoBehaviour
 
         currentEgo = maxEgo;
         currentHRM = maxHRM;
+
+        egoUI = UIManager.Instance.egoUI;
+        hormoneUI = UIManager.Instance.hormoneUI;
+        specialSkillUI = UIManager.Instance.specialSkillUI;
+        electroAnestheisaUI = UIManager.Instance.electroAnestheisaUI;
+        cortisolUI = UIManager.Instance.cortisolUI;
+        feelMindUI = UIManager.Instance.feelMindUI;
 
         egoUI.fillAmount = (float) currentEgo / maxEgo;
         hormoneUI.fillAmount = (float) currentHRM / maxHRM;

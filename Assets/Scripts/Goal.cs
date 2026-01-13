@@ -58,5 +58,6 @@ public class Goal : MonoBehaviour
         }
 
         Debug.Log("Cleared!");
+        GameManager.Instance.StageClear();
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -36,5 +37,10 @@ public class GameManager : MonoBehaviour
     public void CursorInactive()
     {
         Cursor.SetCursor(redDot, new Vector2(cursorTexture.width / 2f, cursorTexture.height / 2f), CursorMode.Auto);
+    }
+
+    public void StageClear()
+    {
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
