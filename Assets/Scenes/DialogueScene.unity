@@ -335,7 +335,77 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!1001 &6691553598096895552
+--- !u!1 &1880375563
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1880375565}
+  - component: {fileID: 1880375564}
+  m_Layer: 0
+  m_Name: Test
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1880375564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1880375563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 561dddcc6c7ffc74984c6374b19cfcdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueTest
+  onTestEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2099521278}
+        m_TargetAssemblyTypeName: DoubleDialogueController, Assembly-CSharp
+        m_MethodName: StartDialogue
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!4 &1880375565
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1880375563}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 991.733, y: 493.66995, z: 457.7754}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2099521278 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2341975136435593570, guid: 9fe8dfd5a6bbdf5498684f2aaa06acea, type: 3}
+  m_PrefabInstance: {fileID: 6701442274309598669}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db7871331304a2e498976d0474e10071, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DoubleDialoguePresenter
+--- !u!1001 &6701442274309598669
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -343,87 +413,47 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7417358510983888646, guid: cdbb0e3bd0d8baa4aa0528a03c164685, type: 3}
+    - target: {fileID: 4982948694091211514, guid: 9fe8dfd5a6bbdf5498684f2aaa06acea, type: 3}
       propertyPath: m_Name
-      value: Dialogue
+      value: DoubleDialogue
       objectReference: {fileID: 0}
-    - target: {fileID: 7450916017967523174, guid: cdbb0e3bd0d8baa4aa0528a03c164685, type: 3}
-      propertyPath: m_Pivot.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7450916017967523174, guid: cdbb0e3bd0d8baa4aa0528a03c164685, type: 3}
-      propertyPath: m_Pivot.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7450916017967523174, guid: cdbb0e3bd0d8baa4aa0528a03c164685, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7450916017967523174, guid: cdbb0e3bd0d8baa4aa0528a03c164685, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7450916017967523174, guid: cdbb0e3bd0d8baa4aa0528a03c164685, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7450916017967523174, guid: cdbb0e3bd0d8baa4aa0528a03c164685, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7450916017967523174, guid: cdbb0e3bd0d8baa4aa0528a03c164685, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7450916017967523174, guid: cdbb0e3bd0d8baa4aa0528a03c164685, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7450916017967523174, guid: cdbb0e3bd0d8baa4aa0528a03c164685, type: 3}
+    - target: {fileID: 7125674083475201863, guid: 9fe8dfd5a6bbdf5498684f2aaa06acea, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 991.733
       objectReference: {fileID: 0}
-    - target: {fileID: 7450916017967523174, guid: cdbb0e3bd0d8baa4aa0528a03c164685, type: 3}
+    - target: {fileID: 7125674083475201863, guid: 9fe8dfd5a6bbdf5498684f2aaa06acea, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 493.66995
       objectReference: {fileID: 0}
-    - target: {fileID: 7450916017967523174, guid: cdbb0e3bd0d8baa4aa0528a03c164685, type: 3}
+    - target: {fileID: 7125674083475201863, guid: 9fe8dfd5a6bbdf5498684f2aaa06acea, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 457.7754
       objectReference: {fileID: 0}
-    - target: {fileID: 7450916017967523174, guid: cdbb0e3bd0d8baa4aa0528a03c164685, type: 3}
+    - target: {fileID: 7125674083475201863, guid: 9fe8dfd5a6bbdf5498684f2aaa06acea, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7450916017967523174, guid: cdbb0e3bd0d8baa4aa0528a03c164685, type: 3}
+    - target: {fileID: 7125674083475201863, guid: 9fe8dfd5a6bbdf5498684f2aaa06acea, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7450916017967523174, guid: cdbb0e3bd0d8baa4aa0528a03c164685, type: 3}
+    - target: {fileID: 7125674083475201863, guid: 9fe8dfd5a6bbdf5498684f2aaa06acea, type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7450916017967523174, guid: cdbb0e3bd0d8baa4aa0528a03c164685, type: 3}
+    - target: {fileID: 7125674083475201863, guid: 9fe8dfd5a6bbdf5498684f2aaa06acea, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7450916017967523174, guid: cdbb0e3bd0d8baa4aa0528a03c164685, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7450916017967523174, guid: cdbb0e3bd0d8baa4aa0528a03c164685, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7450916017967523174, guid: cdbb0e3bd0d8baa4aa0528a03c164685, type: 3}
+    - target: {fileID: 7125674083475201863, guid: 9fe8dfd5a6bbdf5498684f2aaa06acea, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7450916017967523174, guid: cdbb0e3bd0d8baa4aa0528a03c164685, type: 3}
+    - target: {fileID: 7125674083475201863, guid: 9fe8dfd5a6bbdf5498684f2aaa06acea, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7450916017967523174, guid: cdbb0e3bd0d8baa4aa0528a03c164685, type: 3}
+    - target: {fileID: 7125674083475201863, guid: 9fe8dfd5a6bbdf5498684f2aaa06acea, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
@@ -431,11 +461,12 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: cdbb0e3bd0d8baa4aa0528a03c164685, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 9fe8dfd5a6bbdf5498684f2aaa06acea, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1058661847}
   - {fileID: 978069549}
-  - {fileID: 6691553598096895552}
+  - {fileID: 6701442274309598669}
+  - {fileID: 1880375565}

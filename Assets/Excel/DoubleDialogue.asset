@@ -21,7 +21,7 @@ MonoBehaviour:
     leftimage: Hero_Normal
     rightname: B
     rightimage: Demon_Normal
-    activeside: Left
+    activeside: 0
     context: Text1
   - groupid: 1
     id: 1002
@@ -29,7 +29,7 @@ MonoBehaviour:
     leftimage: Hero_Angry
     rightname: B
     rightimage: Demon_Laugh
-    activeside: Right
+    activeside: 0
     context: Text2
   - groupid: 1
     id: 1003
@@ -37,7 +37,7 @@ MonoBehaviour:
     leftimage: Hero_Attack
     rightname: B
     rightimage: Demon_Normal
-    activeside: Left
+    activeside: 0
     context: Text3
   - groupid: 2
     id: 1001
@@ -45,21 +45,21 @@ MonoBehaviour:
     leftimage: Hero_Normal
     rightname: B
     rightimage: Demon_Normal
-    activeside: Left
-    context: Text1
+    activeside: 0
+    context: Text4
   - groupid: 2
     id: 1002
     leftname: A
     leftimage: Hero_Angry
     rightname: B
     rightimage: Demon_Laugh
-    activeside: Right
-    context: Text2
+    activeside: 0
+    context: Text5
   - groupid: 2
     id: 1003
     leftname: A
     leftimage: Hero_Attack
     rightname: B
     rightimage: Demon_Normal
-    activeside: Left
-    context: Text3
+    activeside: 0
+    context: Text6
