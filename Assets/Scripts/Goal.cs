@@ -13,38 +13,36 @@ public class Goal : MonoBehaviour
         Circle = transform.Find("Circle");
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void GameClear(Collider2D collision, PlayerMove player)
     {
         if (collision.CompareTag("Player"))
         {
-            PlayerMove player = collision.GetComponentInParent<PlayerMove>();
-            player.StopMovement();
-
+            player.DisableMovement();
             Vortex = player.transform.Find("Vortex");
-            StartCoroutine(FinishGame(player));
+            StartCoroutine(ClearAnim(player));
         }
     }
 
-    private IEnumerator FinishGame(PlayerMove player)
+    private IEnumerator ClearAnim(PlayerMove player)
     {
-        //매우 비효율적인 애니메이션
         player.rb.gravityScale = 0f;
         player.cc.enabled = false;
         player.rb.linearVelocityY = 0.2f;
+        int sightRight = player.transform.localScale.x > 0 ? 1 : -1;
+
         for (int i = 0; i < 40; i++)
         {
-            player.transform.localScale -= 0.1f * Vector3.one;
+            player.transform.localScale -= 0.1f * new Vector3(sightRight, 1, 1);
             Vortex.localScale += 0.01f * Vector3.one;
             yield return new WaitForSeconds(0.05f);
         }
-        yield return new WaitForSeconds(0.2f);
         player.rb.linearVelocityY = 0f;
 
-        while (Vector3.Distance(transform.position, player.transform.position) > 0.3f)
+        while (Vector3.Distance(transform.position, player.transform.position) > 0.1f)
         {
             Vector3 direction = (transform.position - player.transform.position).normalized;
             currentSpeed += acceleration * Time.deltaTime;
-            player.transform.position += direction * currentSpeed * Time.deltaTime; ;
+            player.transform.position += direction * currentSpeed * Time.deltaTime;
             yield return new WaitForSeconds(0.001f);
         }
 
