@@ -38,6 +38,13 @@ public class DoubleDialogueController : BaseUIController<DoubleDialogueView, Dou
 
     private void HandleNextDialogue()
     {
+        // 1. 타이핑 중이라면 즉시 완성하고 리턴 (스킵 기능)
+        if (view.IsTyping)
+        {
+            view.SkipTyping();
+            return;
+        }
+
         do
         {
             model.MoveNext();
@@ -62,9 +69,13 @@ public class DoubleDialogueController : BaseUIController<DoubleDialogueView, Dou
         view.Show();
 
         view.SetContent(currentData.Context);
+
         view.SetSpeakerName(currentData.Leftname, currentData.Rightname);
         view.SetSpeakerImage(currentData.Leftimage, currentData.Rightimage);
         view.HighlightSpeaker(currentData.Activeside == "Left");
+
+        // string animTrigger = currentData.Activeside == "Left" ? currentData.LeftAnim : currentData.RightAnim;
+        // view.PlaySpeakerAnimation(currentData.Activeside == "Left", animTrigger);
     }
 
     public void CloseDialogue()
