@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class BadWordAttack : MonoBehaviour
 {
@@ -8,7 +9,8 @@ public class BadWordAttack : MonoBehaviour
     private DefMechanism dm;
     private EnemyController ec;
 
-    [SerializeField] private GameObject BadWordPrefab;
+    [SerializeField] private GameObject BadWordBeam;
+    [SerializeField] private GameObject BadWordParticle;
 
     private void Awake()
     {
@@ -26,10 +28,11 @@ public class BadWordAttack : MonoBehaviour
 
         int shootDirection = ec.SightXInt();
         Vector3 spawnOffset = new Vector3(0.5f * shootDirection, 0.2f);
-        GameObject laser = Instantiate(BadWordPrefab, transform.position + spawnOffset, Quaternion.identity);
+        GameObject laser = Instantiate(BadWordBeam, transform.position + spawnOffset, Quaternion.identity);
         laser.transform.localScale = new Vector3(0.6f * shootDirection, laser.transform.localScale.y);
         float startTime = Time.time;
 
+        StartCoroutine(SpawnParticle(spawnOffset, shootDirection));
         while (Time.time - startTime < 1f)
         {
             rb.linearVelocityX = -3f * shootDirection;
@@ -45,5 +48,24 @@ public class BadWordAttack : MonoBehaviour
         yield return new WaitForSeconds(1f); //후딜
         
         dm.StopAttack(4f);
+    }
+
+    private IEnumerator SpawnParticle(Vector3 spawnOffset, int shootDirection)
+    {
+        GameObject[] particles = new GameObject[20];
+        for (int i = 0; i < 20; i++)
+        {
+            particles[i] = Instantiate(BadWordParticle, transform.position + spawnOffset 
+                + i/20f * new Vector3(shootDirection, 0) * 40f, Quaternion.identity);
+            for (int j = 0; j < i; j++)
+            {
+                particles[j].transform.position = transform.position + spawnOffset + j/20f * new Vector3(shootDirection, 0) * 40f;
+            }
+            yield return new WaitForSeconds(0.05f);
+        }
+        foreach (GameObject p in particles)
+        {
+            Destroy(p);
+        }
     }
 }

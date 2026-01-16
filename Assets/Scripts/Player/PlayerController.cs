@@ -7,32 +7,42 @@ public class PlayerController : MonoBehaviour
 {
     private bool isClearing = false;
     public bool onNeuron = false;
-    public bool isInterationing = false;
+    public bool isInteractioning = false;
     private int maxEgo = 10;
     private int currentEgo;
     private int maxHRM = 5;
     private int currentHRM;
     private bool onDamageCool = false;
     private bool onSpecialSkillCool = false;
-    private bool onEACool = false;
+    [SerializeField]private bool onEACool = false;
     private bool onCortisolCool = false;
     private bool onFMCool = false;
     private Collider2D target = null;
 
-    [SerializeField] private Image egoUI;
-    [SerializeField] private Image hormoneUI;
-    [SerializeField] private Image specialSkillUI;
-    [SerializeField] private Image electroAnestheisaUI;
-    [SerializeField] private Image cortisolUI;
-    [SerializeField] private Image feelMindUI;
+    private Image egoUI;
+    private Image hormoneUI;
+    private Image specialSkillUI;
+    private Image electroAnestheisaUI;
+    private Image cortisolUI;
+    private Image feelMindUI;
     [SerializeField] private GameObject spark;
     [SerializeField] private GameObject feelMindPrefab;
+    [SerializeField] private GameObject chocolateBombPrefab;
     [SerializeField] private Transform goalTransform;
 
     private CapsuleCollider2D cc;
     private PlayerMove player;
     private Rigidbody2D rb;
+    private Animator anim;
 
+
+    private void Awake()
+    {
+        cc = GetComponent<CapsuleCollider2D>();
+        player = GetComponent<PlayerMove>();
+        rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+    }
 
     private void Start()
     {
@@ -40,16 +50,15 @@ public class PlayerController : MonoBehaviour
         {
             goalTransform = GameObject.FindGameObjectWithTag("Goal").transform;
         }
-    }
-
-    private void Awake()
-    {
-        cc = GetComponent<CapsuleCollider2D>();
-        player = GetComponent<PlayerMove>();
-        rb = GetComponent<Rigidbody2D>();
-
         currentEgo = maxEgo;
         currentHRM = maxHRM;
+
+        egoUI = UIManager.Instance.egoUI;
+        hormoneUI = UIManager.Instance.hormoneUI;
+        specialSkillUI = UIManager.Instance.specialSkillUI;
+        electroAnestheisaUI = UIManager.Instance.electroAnestheisaUI;
+        cortisolUI = UIManager.Instance.cortisolUI;
+        feelMindUI = UIManager.Instance.feelMindUI;
 
         egoUI.fillAmount = (float) currentEgo / maxEgo;
         hormoneUI.fillAmount = (float) currentHRM / maxHRM;
@@ -58,7 +67,7 @@ public class PlayerController : MonoBehaviour
         cortisolUI.fillAmount = 0f;
         feelMindUI.fillAmount = 0f;
     }
-
+    
     private void Update()
     {
         ElectricalAnesthesia();
@@ -74,8 +83,7 @@ public class PlayerController : MonoBehaviour
             if (currentEgo <= 0)
             {
                 currentEgo = 0;
-                Debug.Log("플레이어 사망");
-                //사망 처리
+                Debug.Log("플레이어 사망"); /*******************************/
             }
         }
     }
@@ -96,15 +104,14 @@ public class PlayerController : MonoBehaviour
             {
                 target.GetComponent<EnemyController>().GetShocked();
 
-                StartCoroutine(player.EAAnimation());
+                StartCoroutine(EAAnimation());
                 StartCoroutine(EATimer());
             }
         }
     }
-    private void ElectricalAnesthesia()
+    private void ElectricalAnesthesia() //전기 마취 타겟 감지
     {
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(mousePos, 0.5f, LayerMask.GetMask("Enemy"));
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(GameManager.Instance.GetMousePos(), 0.5f, LayerMask.GetMask("Enemy"));
         EnemyController ec;
 
         float max_distance = 6f;
@@ -114,10 +121,10 @@ public class PlayerController : MonoBehaviour
         foreach (Collider2D enemy in enemies)
         {
             ec = enemy.GetComponent<EnemyController>();
-            if (ec.isEA) continue;
+            if (ec.stunned) continue;
 
-            enemyHeadPos = enemy.transform.position + new Vector3(0, enemy.GetComponent<BoxCollider2D>().size.y * enemy.transform.localScale.y / 4f, 0);
-            float distance = Vector2.Distance(mousePos, enemyHeadPos);
+            enemyHeadPos = ec.headPos.position;
+            float distance = Vector2.Distance(GameManager.Instance.GetMousePos(), enemyHeadPos);
             if (max_distance > distance
                 && Vector2.Dot(ec.lookingDirection, playerHeadPos - enemyHeadPos) < 0)
             {
@@ -139,8 +146,7 @@ public class PlayerController : MonoBehaviour
         }
         
         ec = closest_enemy.GetComponent<EnemyController>();
-        enemyHeadPos = closest_enemy.transform.position
-            + new Vector3(0, closest_enemy.GetComponent<BoxCollider2D>().size.y * closest_enemy.transform.localScale.y / 4f, 0);
+        enemyHeadPos = ec.headPos.position;
 
         RaycastHit2D hit = Physics2D.Raycast(playerHeadPos, enemyHeadPos - playerHeadPos, Vector2.Distance(playerHeadPos, enemyHeadPos),
             LayerMask.GetMask("Enemy", "Wall", "Ground"));
@@ -158,7 +164,20 @@ public class PlayerController : MonoBehaviour
             target = null;
         }
     }
-    private IEnumerator EATimer()
+    public IEnumerator EAAnimation() //전기마취 애니메이션
+    {
+        Vector2 init_velocity = rb.linearVelocity;
+        player.StopMovement();
+
+        bool sameDirection = (GameManager.Instance.GetMousePos().x - transform.position.x) * transform.localScale.x > 0 ? true : false;
+        anim.SetBool("SameDirection", sameDirection);
+        anim.SetTrigger("EA");
+
+        yield return new WaitForSeconds(0.5f);
+        rb.linearVelocity = init_velocity;
+        player.EnableMovement();
+    }
+    private IEnumerator EATimer() //전기마취 쿨타임
     {
         onEACool = true;
         for (int i = 0; i < 100 ; i  ++)
@@ -187,6 +206,12 @@ public class PlayerController : MonoBehaviour
                 {
                     collider.GetComponent<Neuron>().SendSignal(player, spark);
                     onNeuron = true;
+                }
+                else if (collider.gameObject.layer == LayerMask.NameToLayer("Interaction") && !isInteractioning) //상호작용 오브젝트
+                {
+                    //collider.GetComponent<InteractionObject>().StartInteraction(player, cc);
+                    anim.SetBool("IsInteractioning", true);
+                    isInteractioning = true;
                 }
             }
         }
@@ -302,7 +327,9 @@ public class PlayerController : MonoBehaviour
                 switch (GameManager.Instance.stageNumber)
                 {
                     case 1:
-                        ChocolateBomb();
+                        Debug.Log("초콜릿 폭탄 발동");
+                        StartCoroutine(ChocolateBomb());
+                        anim.SetTrigger("SpecialSkill");
                         StartCoroutine(SpecialSkillTimer(5f));
                         break;
                     default:
@@ -329,11 +356,12 @@ public class PlayerController : MonoBehaviour
         onSpecialSkillCool = false;
     }
 
-    private void ChocolateBomb()
+    private IEnumerator ChocolateBomb()
     {
-        GetComponent<Animator>().SetTrigger("ChocolateBomb");
         StartCoroutine(CBAnim());
 
+        yield return new WaitForSeconds(0.5f);
+        GameObject chocBomb = Instantiate(chocolateBombPrefab, transform.position, Quaternion.identity);
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 4f);
         foreach (Collider2D collider in colliders)
         {
@@ -342,6 +370,8 @@ public class PlayerController : MonoBehaviour
                 collider.GetComponent<EnemyController>().EatingChocolate();
             }
         }
+        yield return new WaitForSeconds(0.5f);
+        Destroy(chocBomb);
     }
     private IEnumerator CBAnim()
     {

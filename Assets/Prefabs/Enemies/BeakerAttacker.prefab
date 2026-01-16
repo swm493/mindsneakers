@@ -433,7 +433,7 @@ Transform:
   m_GameObject: {fileID: 7896528246287059118}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.05, z: 0}
+  m_LocalPosition: {x: 0, y: 0.075, z: 0}
   m_LocalScale: {x: 0.14285713, y: 0.1428571, z: 0.1428571}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -531,7 +531,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -13.53, y: -0.56, z: 0}
-  m_LocalScale: {x: 7, y: 7, z: 7}
+  m_LocalScale: {x: 6, y: 6, z: 6}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4481412779606437435}
@@ -588,8 +588,8 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 20
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -2425068948780354478, guid: 30e5be21e6f989b4f84713160d124180, type: 3}
-  m_Color: {r: 0.49538696, g: 1, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 5fb6c47d3f5f971418c889ed7e768f20, type: 3}
+  m_Color: {r: 0.990566, g: 0.990566, b: 0.990566, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -608,7 +608,7 @@ Animator:
   m_GameObject: {fileID: 9193659137539481314}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4a1c9a177906f094bbc0062abdff8622, type: 2}
+  m_Controller: {fileID: 9100000, guid: 3f01b4caa3f92174eb3a9f4045e76a2b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -681,17 +681,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.00047504902, y: 0.0033250228}
+  m_Offset: {x: -0.00047504902, y: 0.010294355}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.15, y: 0.27}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 0.15, y: 0.27}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.13384953, y: 0.2595498}
+  m_Size: {x: 0.13384953, y: 0.27348846}
   m_EdgeRadius: 0
 --- !u!114 &3703852551178079699
 MonoBehaviour:
@@ -706,8 +706,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lookingDirection: {x: 1, y: 0}
+  headPos: {fileID: 4481412779606437435}
   isTargeted: 0
-  isEA: 0
+  stunned: 0
   anim: {fileID: 0}
 --- !u!114 &-692695814821967099
 MonoBehaviour:
@@ -731,7 +732,7 @@ MonoBehaviour:
   sightRange: 3.5
   isSleeping: 0
   isWanderingType: 0
-  destinations: []
+  destination: {fileID: 0}
 --- !u!114 &2709040603528287308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -744,7 +745,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 032e6f51d4fcc75459ad6ef85b5f4efd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acidPrefab: {fileID: 6049660716057619435, guid: 3164b65a2d30df54a9a067efe1627196, type: 3}
-  gravity: 60
-  speed: 25
+  acid: {fileID: 1045078103347871398, guid: effbd14ded2dd944c89f5b825263ab10, type: 3}
+  acidParticle: {fileID: 6049660716057619435, guid: 3164b65a2d30df54a9a067efe1627196, type: 3}
+  beakerParticle: {fileID: 5641342373412939256, guid: affac05992dda294687339fdc7fc152f, type: 3}
+  gravity: 40
+  speed: 15
   attacklevel: 1

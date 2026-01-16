@@ -15,14 +15,15 @@ public class DefMechanism : MonoBehaviour
     [SerializeField] private Image aggroGaugeBar;
     [SerializeField] private GameObject cortisolPrefab;
 
+    [Header("HyperParameters")]
     /****************HyperParameters*****************/
     [SerializeField] private DefMechType defMechType;
     [SerializeField] private float moveSpeed = 3f;
     [SerializeField] private float sightRange = 7f;
     [SerializeField] private bool isSleeping = false;
-    [SerializeField] private bool isWanderingType = false;
-    [SerializeField] private Transform[] destinations;
+    [SerializeField] private Transform destination;
     /*************************************************/
+    private Transform[] destinations;
 
 
     private EnemyController ec;
@@ -36,16 +37,23 @@ public class DefMechanism : MonoBehaviour
         ec = GetComponent<EnemyController>();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+    }
 
+    private void Start()
+    {
+        if (destination != null)
+        {
+            destinations = destination.GetComponentsInChildren<Transform>();
+        }
         anim.SetBool("IsSleeping", isSleeping);
-        if (isWanderingType)
+        if (destination != null)
             StartCoroutine(WanderingSystem());
     }
 
     private void Update()
     {
         aggroGaugeBar.fillAmount = (float)aggroGauge / maxAggroGauge;
-        if (!GetComponent<EnemyController>().isEA && !isSleeping)
+        if (!GetComponent<EnemyController>().stunned && !isSleeping)
         {
             AttackSystem(); //공격 시스템
         }
@@ -55,7 +63,7 @@ public class DefMechanism : MonoBehaviour
     private void AttackSystem()
     {
         Collider2D player = Physics2D.OverlapCircle(transform.position, 15f, LayerMask.GetMask("Player"));
-        if(player != null && player.GetComponent<PlayerController>().isInterationing) return;
+        if(player != null && player.GetComponent<PlayerController>().isInteractioning) return;
         if (aggroGauge > 0)
         {
             if (!isAttacking) //따라다니기
@@ -121,7 +129,7 @@ public class DefMechanism : MonoBehaviour
                     rb.linearVelocityX = 0;
                     aggroGauge = 0;
                     ec.lookingDirection = new Vector2 (ec.SightXInt(), 0);
-                    if(isWanderingType) StartCoroutine(WanderingSystem());
+                    if(destination != null) StartCoroutine(WanderingSystem());
                 }
             }
         }
@@ -136,18 +144,17 @@ public class DefMechanism : MonoBehaviour
 
     private IEnumerator WanderingSystem()
     {
-        if (destinations.Length == 0) yield break;
-        int i = 0;
-        while(!ec.isEA && aggroGauge == 0)
+        int i = 1;
+        while(!ec.stunned && aggroGauge == 0)
         {
-            while (Mathf.Abs(destinations[i].position.x - transform.position.x) > 0.1f && !ec.isEA && aggroGauge == 0)
+            while (Mathf.Abs(destinations[i].position.x - transform.position.x) > 0.1f && !ec.stunned && aggroGauge == 0)
             {
                 ec.lookingDirection.x = (destinations[i].position.x - transform.position.x) > 0 ? 1f : -1f;
                 rb.linearVelocityX = moveSpeed * ec.SightXInt();
                 yield return null;
             }
             yield return new WaitForSeconds(2f);
-            if (i == destinations.Length - 1) i = 0;
+            if (i == destinations.Length - 1) i = 1;
             else i++;
         }
     }
@@ -182,7 +189,6 @@ public class DefMechanism : MonoBehaviour
 
     public IEnumerator ShowCortisol()
     {
-        Debug.Log("Cortisol Showed");
         for (int i = 0; i < destinations.Length - 1; i++)
         {
             float passedTime = 0f;

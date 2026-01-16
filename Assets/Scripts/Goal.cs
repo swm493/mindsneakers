@@ -57,6 +57,6 @@ public class Goal : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
 
-        Debug.Log("Cleared!");
+        GameManager.Instance.StageClear();
     }
 }

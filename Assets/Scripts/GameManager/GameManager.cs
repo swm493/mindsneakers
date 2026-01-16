@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,6 +20,8 @@ public class GameManager : MonoBehaviour
     private Texture2D cursorTexture;
     private Texture2D redDot;
 
+    public Vector2 mousePos;
+
     public int stageNumber = 1;
     public int gravityScale = 6;
 
@@ -28,6 +32,11 @@ public class GameManager : MonoBehaviour
         CursorActive();
     }
 
+    public Vector2 GetMousePos()
+    {
+        return Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+    }
+
     public void CursorActive()
     {
         Cursor.SetCursor(cursorTexture, new Vector2(cursorTexture.width / 2f, cursorTexture.height / 2f), CursorMode.Auto);
@@ -36,5 +45,10 @@ public class GameManager : MonoBehaviour
     public void CursorInactive()
     {
         Cursor.SetCursor(redDot, new Vector2(cursorTexture.width / 2f, cursorTexture.height / 2f), CursorMode.Auto);
+    }
+
+    public void StageClear()
+    {
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

@@ -1,13 +1,15 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using System.Collections;
 
 public class EnemyController : MonoBehaviour
 {
     //적이 공통으로 가질 속성들을 관리 (피격 판정 등)
     public Vector2 lookingDirection = Vector2.left;
+    public Transform headPos;
 
-    public bool isTargeted = false; // 전기마취 타겟팅 여부
-    public bool isEA = false; // 전기마취 당했는지 여부
+    public bool isTargeted = false; //전기마취 타겟팅 여부
+    public bool stunned = false; //전기마취 당했는지 여부 
 
     public Animator anim;
     private Rigidbody2D rb;
@@ -32,7 +34,7 @@ public class EnemyController : MonoBehaviour
     {
         if (isTargeted)
         {
-            if (Physics2D.OverlapCircleAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), 0.5f, LayerMask.GetMask("Enemy")).Length == 0)
+            if (Physics2D.OverlapCircleAll(GameManager.Instance.GetMousePos(), 0.5f, LayerMask.GetMask("Enemy")).Length == 0)
             {
                 isTargeted = false;
                 GameManager.Instance.CursorActive();
@@ -47,9 +49,9 @@ public class EnemyController : MonoBehaviour
             anim.SetBool("OnTargeted", false);
         }
         if (lookingDirection.x > 0)
-            anim.SetBool("FacingRight", true);
+            transform.localScale = new Vector3(6, 6, 6);
         else if (lookingDirection.x < 0)
-            anim.SetBool("FacingRight", false);
+            transform.localScale = new Vector3(-6, 6, 6);
 
         if (Mathf.Abs(rb.linearVelocityX) > 0.01f) //움직임 애니메이션
             anim.SetBool("IsMoving", true);
@@ -60,20 +62,25 @@ public class EnemyController : MonoBehaviour
     //전기마취
     public void GetShocked()
     {
-        if (isEA == false)
+        StartCoroutine(Stun());
+    }
+    private IEnumerator Stun()
+    {
+        yield return new WaitForSeconds(0.2f);
+        if (stunned == false)
         {
-            isEA = true;
+            stunned = true;
             isTargeted = false;
             rb.simulated = false;
-            Debug.Log(gameObject.name + "(이)가 전기마취 당함!");
-            anim.SetTrigger("ElectricalAnesthesia");
+            anim.SetTrigger("Stun");
         }
     }
 
     //스페셜 스킬1
     public void EatingChocolate()
     {
-        Debug.Log("냠냠");
-        anim.SetTrigger("EatingChocolate");
+        anim.SetTrigger("Chocolate");
+        stunned = true;
+        rb.simulated = false;
     }
 }

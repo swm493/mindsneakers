@@ -24,11 +24,11 @@ public class AcidParticle : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        rb.linearVelocityX = 0f;
         if (collision.gameObject.layer == LayerMask.NameToLayer("Ground")
             || collision.gameObject.layer == LayerMask.NameToLayer("Platform")
             && Mathf.Abs(rb.linearVelocityY) < 0.1f)
         {
+            rb.linearVelocityX = 0f;
             StartCoroutine(Destroy());
         }
     }

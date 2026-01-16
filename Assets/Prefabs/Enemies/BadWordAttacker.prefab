@@ -179,7 +179,7 @@ Transform:
   m_GameObject: {fileID: 3438777604441514260}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.05, z: 0}
+  m_LocalPosition: {x: 0, y: 0.075, z: 0}
   m_LocalScale: {x: 0.14285713, y: 0.1428571, z: 0.1428571}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -531,7 +531,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -36.92, y: 13.9, z: 0}
-  m_LocalScale: {x: 7, y: 7, z: 7}
+  m_LocalScale: {x: 6, y: 6, z: 6}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4229760338311260391}
@@ -588,8 +588,8 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 20
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -2425068948780354478, guid: 30e5be21e6f989b4f84713160d124180, type: 3}
-  m_Color: {r: 1, g: 0, b: 0.043130875, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 0adb3f4b5ce83354d8c8bb8b85988d31, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -608,7 +608,7 @@ Animator:
   m_GameObject: {fileID: 6802473208088492328}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4a1c9a177906f094bbc0062abdff8622, type: 2}
+  m_Controller: {fileID: 9100000, guid: bc8d4b7904796174fad0c55fc43a017b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -681,17 +681,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.00047504902, y: 0.0033250228}
+  m_Offset: {x: -0.00047504902, y: 0.009929933}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.15, y: 0.27}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 0.15, y: 0.27}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.13384953, y: 0.2595498}
+  m_Size: {x: 0.13384953, y: 0.27275962}
   m_EdgeRadius: 0
 --- !u!114 &159762953885802732
 MonoBehaviour:
@@ -706,8 +706,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lookingDirection: {x: 1, y: 0}
+  headPos: {fileID: 4229760338311260391}
   isTargeted: 0
-  isEA: 0
+  stunned: 0
   anim: {fileID: 0}
 --- !u!114 &1395125628381183349
 MonoBehaviour:
@@ -744,4 +745,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c9c4fb987ed95341a225ca02dd4ecb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BadWordPrefab: {fileID: 3389916455697367757, guid: 516952b326ec1494a965c3bb82f4c345, type: 3}
+  BadWordBeam: {fileID: 3389916455697367757, guid: 516952b326ec1494a965c3bb82f4c345, type: 3}
+  BadWordParticle: {fileID: 6919179123388774674, guid: e39500ce05f3a5b48b8a6c375c066a65, type: 3}

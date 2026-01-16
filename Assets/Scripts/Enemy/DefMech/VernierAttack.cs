@@ -9,6 +9,7 @@ public class VernierAttack : MonoBehaviour
     private DefMechanism dm;
 
     [SerializeField] private Collider2D calliper;
+    private EnterTrigger calliper_et;
 
     private void Awake()
     {
@@ -16,6 +17,7 @@ public class VernierAttack : MonoBehaviour
         anim = GetComponent<Animator>();
         ec = GetComponent<EnemyController>();
         dm = GetComponent<DefMechanism>();
+        calliper_et = calliper.GetComponent<EnterTrigger>();
     }
 
     private void Update()
@@ -26,29 +28,20 @@ public class VernierAttack : MonoBehaviour
     public IEnumerator Attack(Collider2D player)
     {
         rb.linearVelocityX = 0;
-        anim.SetTrigger("VernierAttack");
+        anim.SetTrigger("Attack");
         yield return new WaitForSeconds(1f); //선딜
-        if (ec.isEA) yield break;
+        if (ec.stunned) yield break;
         rb.linearVelocityX = 9f * ec.SightXInt();
+
         
         float startTime = Time.time;
-        while (Time.time - startTime < 0.3f)
+        while (Time.time - startTime < 0.25f)
         {
-            calliper.transform.localRotation = Quaternion.Euler(0, 0, -400f * (Time.time - startTime));
-            Collider2D col = calliper.GetComponent<EnterTrigger>().GetCollider();
+            Collider2D col = calliper_et.GetCollider();
             if(col && col.CompareTag("Player")) player.GetComponent<PlayerController>().TakeDamage(3);
             yield return null;
         }
-        yield return new WaitForSeconds(0.5f);
-
-        startTime = Time.time;
-        while (Time.time - startTime < 0.5f)
-        {
-            calliper.transform.localRotation = Quaternion.Euler(0, 0, -120f + 240f * (Time.time - startTime));
-            yield return null;
-        }
-        calliper.transform.localRotation = Quaternion.Euler(0, 0, 0);
-        yield return new WaitForSeconds(0.5f); //후딜
+        yield return new WaitForSeconds(0.25f);
         dm.StopAttack(1f);
     }
 }

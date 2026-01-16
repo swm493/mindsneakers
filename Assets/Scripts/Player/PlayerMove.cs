@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -14,13 +15,12 @@ public class PlayerMove : MonoBehaviour
     private bool moveEnabled = true;
     public int currentJumpCount = 0;
     [SerializeField]private bool onGround = false;
-    public bool onLadder = false;
     public bool onBush = false;
-    private bool isClimbing = false;
     private bool isUpping = false;
     private bool isDowning = false;
     public bool isDashing = false;
-    private bool dashEnabled = true;
+    private bool isFalling = false;
+    private bool onDashCooldown = false;
 
     public Rigidbody2D rb;
     public CapsuleCollider2D cc;
@@ -46,26 +46,16 @@ public class PlayerMove : MonoBehaviour
                     //원점 : 플레이어의 발, 크기 : 가로는 0.95칸, 세로는 0.1칸
         {
             onGround = true;
+            isFalling = false;
             if (Mathf.Abs(rb.linearVelocityY) < 0.11f) currentJumpCount = maxJumpCount;
         }
         else
         {
             onGround = false;
+            if (currentJumpCount == maxJumpCount)
+                currentJumpCount--;
         }
         anim.SetBool("OnGround", onGround);
-
-        //사다리 체크
-        if (Physics2D.OverlapBox(transform.position - new Vector3(0, cc.size.y * transform.localScale.y * 0.1f, 0),
-                    0.7f * new Vector3(1, 2, 1), 0, LayerMask.GetMask("Ladder")))
-                    //원점 : 플레이어의 0.1배 크기 아래, 크기 : 플레이어 크기의 0.7배
-        {
-            onLadder = true;
-        }
-        else
-        {
-            onLadder = false;
-            if (isClimbing && moveEnabled) OffLadder();
-        }
 
         //엄폐물 체크
         onBush = Physics2D.OverlapBox(transform.position, new Vector3(0.9f, 1.8f, 1), 0, LayerMask.GetMask("Bush")) != null;
@@ -77,8 +67,6 @@ public class PlayerMove : MonoBehaviour
             {
                 if (onGround)
                     rb.linearVelocityX = moveVector.x * speed;
-                else if (isClimbing)
-                    rb.linearVelocityX = moveVector.x * speed * 0.7f;
                 else if (!onGround)
                     rb.linearVelocityX = Mathf.MoveTowards(rb.linearVelocityX, moveVector.x * speed, 20f * Time.fixedDeltaTime);
             }
@@ -93,51 +81,19 @@ public class PlayerMove : MonoBehaviour
     private void PlayerAnimation() //moveEnabled가 true일 때만 호출
     {
         if (moveVector.x > 0) //좌우반전
-            transform.localScale = new Vector3(7, 7, 7);
+            transform.localScale = new Vector3(6, 6, 6);
         else if (moveVector.x < 0)
-            transform.localScale = new Vector3(-7, 7, 7);
+            transform.localScale = new Vector3(-6, 6, 6);
 
         if (Mathf.Abs(moveVector.x) > 0.01f) //걷기 애니메이션
             anim.SetBool("IsMoving", true);
         else
             anim.SetBool("IsMoving", false);
         
-        if (isClimbing) //사다리 애니메이션
+        if (rb.linearVelocityY < -0.1f && !onGround && !isFalling)
         {
-            if (isUpping && isDowning)
-            {
-                rb.linearVelocityY = 0f;
-                anim.speed = 0f;
-            }
-            else if (isUpping)
-            {
-                rb.linearVelocityY = speed;
-                anim.speed = 1f;
-            }    
-            else if (isDowning)
-            {
-                rb.linearVelocityY = -speed;
-                anim.speed = 1f;
-            }
-            else
-            {
-                rb.linearVelocityY = 0f;
-                anim.speed = 0f;
-            }
-
-            if (onGround && isDowning)
-                OffLadder();
-        }
-        else //추락 애니메이션
-        {
-            if (rb.linearVelocityY < -0.1f && !onGround)
-            {
-                anim.SetBool("IsFalling", true);
-            }
-            else
-            {
-                anim.SetBool("IsFalling", false);
-            }
+            anim.SetTrigger("Fall");
+            isFalling = true;
         }
     }
 
@@ -152,7 +108,7 @@ public class PlayerMove : MonoBehaviour
     //점프 (Space)
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (moveEnabled && context.performed)
+        if (moveEnabled && context.performed && !isDashing)
         {
             if (isDowning) //플랫폼 아래로 점프
             {
@@ -161,17 +117,9 @@ public class PlayerMove : MonoBehaviour
                 if (platforms.Length != 0)
                     StartCoroutine(DropfromPlatform(platforms));
             }
-            else if (isClimbing) //사다리에서 내리기
-            {
-                OffLadder();
-                if (!isDowning)
-                {
-                    rb.linearVelocityY = jumpForce;
-                    anim.SetTrigger("Jump");
-                }
-            }
             else if (currentJumpCount >= 1) //일반 점프
             {
+                isFalling = false;
                 rb.linearVelocityY = jumpForce;
                 anim.SetTrigger("Jump");
                 currentJumpCount--;
@@ -200,8 +148,6 @@ public class PlayerMove : MonoBehaviour
         if (context.performed)
         {
             isUpping = true;
-            if (onLadder && moveEnabled)
-                ClimbLadder();
         }
         else if (context.canceled)
         {
@@ -216,8 +162,6 @@ public class PlayerMove : MonoBehaviour
         if (context.performed)
         {
             isDowning = true;
-            if (onLadder && moveEnabled)
-                ClimbLadder();
         }
         else if (context.canceled)
         {
@@ -231,10 +175,8 @@ public class PlayerMove : MonoBehaviour
     {
         if (context.performed && moveEnabled)
         {
-            if (dashEnabled && moveEnabled)
+            if (!onDashCooldown && moveEnabled)
             {
-                if (isClimbing)
-                    OffLadder();
                 StartCoroutine(Dash());
             }
             else
@@ -244,41 +186,30 @@ public class PlayerMove : MonoBehaviour
     private IEnumerator Dash()
     {
         isDashing = true;
+        anim.SetTrigger("Dash");
         StartCoroutine(DashTimer());
         rb.gravityScale = 0f;
         rb.linearVelocityY = 0f;
+        transform.position += new Vector3(0, 0.1f, 0); //충돌 문제 방지용
         if (transform.localScale.x > 0)
             rb.linearVelocityX = 15f;
         else if (transform.localScale.x < 0)
             rb.linearVelocityX = -15f;
-        yield return new WaitForSeconds(onGround ? 0.2f : 0.1f);
+        yield return new WaitForSeconds(0.2f);
         rb.gravityScale = GameManager.Instance.gravityScale;
+        if (rb.linearVelocityX > 13f)
+            rb.linearVelocityX = 13f;
+        else if (rb.linearVelocityX < -13f)
+            rb.linearVelocityX = -13f;
         isDashing = false;
     }
     private IEnumerator DashTimer()
     {
-        dashEnabled = false;
+        onDashCooldown = true;
         yield return new WaitForSeconds(dashCool);
-        dashEnabled = true;
+        onDashCooldown = false;
     }
 
-
-    private void ClimbLadder() //사다리 타기
-    {
-        rb.gravityScale = 0f;
-        rb.linearVelocityY = 0f;
-        isClimbing = true;
-        anim.SetBool("IsFalling", false);
-        anim.SetBool("IsClimbing", true);
-    }
-
-    private void OffLadder() //사다리 내리기
-    {
-        rb.gravityScale = GameManager.Instance.gravityScale;
-        anim.speed = 1f;
-        isClimbing = false;
-        anim.SetBool("IsClimbing", false);
-    }
 
     public void DisableMovement() //이동 정지
     {
@@ -298,33 +229,5 @@ public class PlayerMove : MonoBehaviour
         rb.gravityScale = GameManager.Instance.gravityScale;
         cc.enabled = true;
         moveEnabled = true;
-    }
-
-    public IEnumerator EAAnimation()
-    {
-        Vector2 init_velocity = rb.linearVelocity;
-        StopMovement();
-
-        bool sameDirection = (Camera.main.ScreenToWorldPoint(Input.mousePosition).x - transform.position.x) * transform.localScale.x > 0 ? true : false;
-        anim.SetBool("SameDirection", sameDirection);
-        if (onGround == false)
-        {
-            Debug.Log(sameDirection ? "공중 정방향 쏘기" : "공중 반대로 쏘기");
-            anim.SetTrigger("ShootOnAir");
-        }
-        else if (moveVector.x != 0)
-        {
-            Debug.Log(sameDirection ? "이동 정방향 쏘기" : "이동 반대로 쏘기");
-            anim.SetTrigger("ShootOnMove");
-        }
-        else
-        {
-            Debug.Log(sameDirection ? "정지 정방향 쏘기" : "정지 반대로 쏘기");
-            anim.SetTrigger("ShootOnIdle");
-        }
-
-        yield return new WaitForSeconds(0.5f);
-        rb.linearVelocity = init_velocity;
-        EnableMovement();
     }
 }
