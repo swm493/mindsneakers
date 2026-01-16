@@ -49,11 +49,13 @@ public class GameManager : MonoBehaviour
 
     public void RestartScene()
     {
+        SaveManager.Instance.playerData.level = 3;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void NextScene()
     {
+        SaveManager.Instance.playerData.level = 3;
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
