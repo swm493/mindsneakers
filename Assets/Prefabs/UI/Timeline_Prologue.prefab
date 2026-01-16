@@ -698,7 +698,7 @@ GameObject:
   - component: {fileID: 2547397820629863490}
   - component: {fileID: 7937180013077542266}
   m_Layer: 5
-  m_Name: PrologueTimeline
+  m_Name: Timeline_Prologue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -801,7 +801,7 @@ PlayableDirector:
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: a0da9517efc35414caef374b61683cc4, type: 2}
   m_InitialState: 1
-  m_WrapMode: 2
+  m_WrapMode: 0
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
   m_SceneBindings:
@@ -835,12 +835,6 @@ PlayableDirector:
     value: {fileID: 7576918054752198440}
   - key: {fileID: -6595397199257958691, guid: a0da9517efc35414caef374b61683cc4, type: 2}
     value: {fileID: 1664643684889973751}
-  - key: {fileID: 1078953650161981486, guid: a0da9517efc35414caef374b61683cc4, type: 2}
-    value: {fileID: 1952907913213692176}
-  - key: {fileID: 1525148750045214294, guid: a0da9517efc35414caef374b61683cc4, type: 2}
-    value: {fileID: 3171082053171410913}
-  - key: {fileID: -6461628560245754251, guid: a0da9517efc35414caef374b61683cc4, type: 2}
-    value: {fileID: 8583279846954984291}
   - key: {fileID: -1666525677689065712, guid: a0da9517efc35414caef374b61683cc4, type: 2}
     value: {fileID: 7937180013077542266}
   m_ExposedReferences:
