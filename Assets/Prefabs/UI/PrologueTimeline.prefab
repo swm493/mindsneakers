@@ -698,7 +698,7 @@ GameObject:
   - component: {fileID: 2547397820629863490}
   - component: {fileID: 7937180013077542266}
   m_Layer: 5
-  m_Name: Prologue
+  m_Name: PrologueTimeline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

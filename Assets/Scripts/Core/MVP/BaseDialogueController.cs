@@ -1,6 +1,7 @@
+using System;
 using UnityEngine;
 
-public abstract class BaseUIController<TView, TModel> : MonoBehaviour
+public abstract class BaseDialogueController<TView, TModel> : MonoBehaviour, IDialogueController
     where TView : MonoBehaviour, IView
     where TModel : IModel
 {
@@ -9,13 +10,16 @@ public abstract class BaseUIController<TView, TModel> : MonoBehaviour
 
     protected bool isInitialized = false;
 
+    public event Action OnDialogueStart;
+    public event Action OnDialogueComplete;
+
     protected virtual void Awake()
     {
         if (isInitialized) return;
 
         if (view != null)
         {
-            OnInitialize();
+            Initialize();
             isInitialized = true;
         }
         else
@@ -24,23 +28,26 @@ public abstract class BaseUIController<TView, TModel> : MonoBehaviour
         }
     }
 
-    public virtual void Initialize(TView view, TModel model)
-    {
-        if (isInitialized) return;
-
-        this.view = view;
-        this.model = model;
-
-        OnInitialize();
-        isInitialized = true;
-    }
-
-    protected virtual void OnInitialize() { }
-
-    protected virtual void Release() { }
-
     protected virtual void OnDestroy()
     {
         Release();
     }
+
+    protected virtual void Initialize() { }
+
+    protected virtual void Release() { }
+
+    public void ShowDialogue()
+    {
+        OnDialogueStart?.Invoke();
+        view.Show();
+    }
+
+    public void CloseDialogue()
+    {
+        view.Hide();
+        OnDialogueComplete?.Invoke();
+    }
+
+    public abstract void SetDialogueId(int id);
 }

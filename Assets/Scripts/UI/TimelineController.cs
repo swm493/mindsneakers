@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.InputSystem;
 
-public class CutsceneController : MonoBehaviour
+public class TimelineController : MonoBehaviour
 {
     public PlayableDirector director;
 
