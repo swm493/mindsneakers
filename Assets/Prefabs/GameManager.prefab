@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1884844943992305056}
   - component: {fileID: 4999165479916436806}
   - component: {fileID: 3684898843859265288}
-  m_Layer: 11
+  m_Layer: 5
   m_Name: HormoneFill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -793,7 +793,7 @@ GameObject:
   - component: {fileID: 4589898098543592632}
   - component: {fileID: 2269401742125359304}
   - component: {fileID: 9174114816220496071}
-  m_Layer: 11
+  m_Layer: 5
   m_Name: EgoFill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -852,7 +852,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.57
+  m_FillAmount: 0.632
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -1111,7 +1111,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -2351515404316838404, guid: 5f8faedcf90a7ef41a19d13154148fd0, type: 3}
+  m_Sprite: {fileID: -685729283132671834, guid: 8ce4c20227778fa4baa49e78f3f94146, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1261,7 +1261,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -296046781075502923, guid: 666e0d418cf0b624d8df78912bca3f54, type: 3}
+  m_Sprite: {fileID: 6450891234541685293, guid: 8625063f26217764895f4d7c8c330d82, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

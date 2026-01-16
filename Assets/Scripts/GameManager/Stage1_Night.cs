@@ -12,12 +12,49 @@ public class Stage1_Night : MonoBehaviour
             return;
         }
         Instance = this;
+
+        pm = player.GetComponent<PlayerMove>();
     }
 
     private bool target2_1 = false;
     private bool target2_2 = false;
+    private int dialogue_count = 0;
     [SerializeField] private GameObject target2_2Object;
     [SerializeField] private GameObject doorObject;
+    [SerializeField] private GameObject SkillUI;
+    [SerializeField] private GameObject dialogueUI;
+    [SerializeField] private GameObject player;
+
+    private PlayerMove pm;
+
+    private void Start()
+    {
+        Dialogue_Start();
+    }
+
+    private void Dialogue_Start()
+    {
+        SkillUI.SetActive(false);
+        dialogueUI.SetActive(true);
+        pm.DisableMovement();
+        dialogue_count++;
+    }
+    public void Dialogue_End()
+    {
+        SkillUI.SetActive(true);
+        dialogueUI.SetActive(false);
+        pm.EnableMovement();
+
+        if (dialogue_count == 2)
+        {
+            StartCoroutine(NextArea());
+        }
+
+        if (dialogue_count == 3)
+        {
+            Debug.Log("낮 전환");
+        }
+    }
 
     public void Interact(PlayerController player, Collider2D collider)
     {
@@ -36,7 +73,7 @@ public class Stage1_Night : MonoBehaviour
                 break;
 
             case "Target1":
-                StartCoroutine(NextArea(player));
+                Dialogue_Start();
                 break;
 
             case "Target2-1":
@@ -46,23 +83,14 @@ public class Stage1_Night : MonoBehaviour
                 break;
 
             case "Target2-3":
-                
-                break;
-            
-            default:
-                Debug.Log("등록되지 않은 상호작용");
+                Dialogue_Start();
                 break;
         }
     }
 
-    private void OpenDoor()
-    {
-        doorObject.SetActive(false);
-    }
-
     private void Update()
     {
-        if (target2_2Object.GetComponent<EnemyController>().stunned)
+        if (target2_2Object != null && target2_2Object.GetComponent<EnemyController>().stunned)
         {
             target2_2 = true;
             if (target2_1)
@@ -70,7 +98,14 @@ public class Stage1_Night : MonoBehaviour
         }
     }
 
-    private IEnumerator NextArea(PlayerController player)
+    private void OpenDoor()
+    {
+        if (doorObject != null) doorObject.SetActive(false);
+    }
+
+    
+
+    private IEnumerator NextArea()
     {
         yield return new WaitForSeconds(2f);
         DontDestroyOnLoad(gameObject);

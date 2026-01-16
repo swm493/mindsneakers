@@ -50,14 +50,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd651b45d3383a942aef1f7d0efaa2ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoubleDialogueView
+  leftNameBox: {fileID: 0}
   leftSpeakerNameText: {fileID: 546091627441427801}
+  rightNameBox: {fileID: 0}
   rightSpeakerNameText: {fileID: 6591964903845807607}
   contentText: {fileID: 206500181123594738}
   leftPortraitImage: {fileID: 1099700292239583481}
   rightPortraitImage: {fileID: 6339516955893468375}
   activeColor: {r: 1, g: 1, b: 1, a: 1}
   inactiveColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  nextButton: {fileID: 0}
+  typingSpeed: 0.05
+  leftPortraitAnimator: {fileID: 0}
+  rightPortraitAnimator: {fileID: 0}
 --- !u!1 &1433546303804729492
 GameObject:
   m_ObjectHideFlags: 0
@@ -962,6 +966,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoubleDialoguePresenter
   view: {fileID: 8745739510351664984}
+  dialogueData: {fileID: 0}
+  OnDialogueStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDialogueEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &9096035195095908527
 GameObject:
   m_ObjectHideFlags: 0

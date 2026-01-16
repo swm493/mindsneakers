@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 666e0d418cf0b624d8df78912bca3f54
+guid: 8625063f26217764895f4d7c8c330d82
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -296046781075502923
-    second: egogauge-removebg-preview_0
+      213: 6450891234541685293
+    second: egogauge_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: egogauge-removebg-preview_0
+      name: egogauge_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5b8c819650b34ebf0800000000000000
-      internalID: -296046781075502923
+      spriteID: d2ac987466b268950800000000000000
+      internalID: 6450891234541685293
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      egogauge-removebg-preview_0: -296046781075502923
+      egogauge_0: 6450891234541685293
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
