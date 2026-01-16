@@ -24,7 +24,7 @@ public class ShoutingAttack : MonoBehaviour
         anim.SetTrigger("Attack"); //웅크리다 소리지르기
         yield return new WaitForSeconds(0.9f); //선딜
 
-        AudioManager.Instance.Play(shoutingSfx, 0.5f);
+        AudioManager.Instance.Play(shoutingSfx, 0.3f);
         GameObject effect = Instantiate(shoutingEffect, transform.position + new Vector3(0, -1), Quaternion.identity);
         Collider2D col = Physics2D.OverlapCircle(hitRange.bounds.center, hitRange.bounds.size.x/2, LayerMask.GetMask("Player"));
         if (col != null)
