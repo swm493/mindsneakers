@@ -119,6 +119,53 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &326186177
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 326186178}
+  - component: {fileID: 326186179}
+  m_Layer: 0
+  m_Name: CutSceneManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &326186178
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 326186177}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 893.6473, y: 571.84064, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &326186179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 326186177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4492b71855ec23142845fdfaa3882c6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CutSceneController
+  cutScenes:
+  - {fileID: 1332662058}
+  - {fileID: 8100738513456300957}
 --- !u!1 &747080188
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,11 +478,56 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7937180013077542266, guid: cd1ab27aa1f429944b5b78a282760b54, type: 3}
+      propertyPath: m_Events.m_Events.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7937180013077542266, guid: cd1ab27aa1f429944b5b78a282760b54, type: 3}
+      propertyPath: m_Events.m_Signals.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7937180013077542266, guid: cd1ab27aa1f429944b5b78a282760b54, type: 3}
+      propertyPath: 'm_Events.m_Signals.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: cd0a7b77bd3d2494380065e05981cf3e, type: 2}
+    - target: {fileID: 7937180013077542266, guid: cd1ab27aa1f429944b5b78a282760b54, type: 3}
+      propertyPath: m_Events.m_Events.Array.data[1].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7937180013077542266, guid: cd1ab27aa1f429944b5b78a282760b54, type: 3}
+      propertyPath: m_Events.m_Events.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7937180013077542266, guid: cd1ab27aa1f429944b5b78a282760b54, type: 3}
+      propertyPath: m_Events.m_Events.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 326186179}
+    - target: {fileID: 7937180013077542266, guid: cd1ab27aa1f429944b5b78a282760b54, type: 3}
+      propertyPath: m_Events.m_Events.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7937180013077542266, guid: cd1ab27aa1f429944b5b78a282760b54, type: 3}
+      propertyPath: m_Events.m_Events.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EndCutScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 7937180013077542266, guid: cd1ab27aa1f429944b5b78a282760b54, type: 3}
+      propertyPath: m_Events.m_Events.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CutSceneController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7937180013077542266, guid: cd1ab27aa1f429944b5b78a282760b54, type: 3}
+      propertyPath: m_Events.m_Events.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd1ab27aa1f429944b5b78a282760b54, type: 3}
+--- !u!1 &1332662058 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3300643751783215480, guid: cd1ab27aa1f429944b5b78a282760b54, type: 3}
+  m_PrefabInstance: {fileID: 1332662057}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8100738513456300956
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -524,6 +616,46 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4231329606122136378, guid: b317375605376c1448ac105e0213a797, type: 3}
+      propertyPath: m_Events.m_Events.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4231329606122136378, guid: b317375605376c1448ac105e0213a797, type: 3}
+      propertyPath: m_Events.m_Signals.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4231329606122136378, guid: b317375605376c1448ac105e0213a797, type: 3}
+      propertyPath: 'm_Events.m_Signals.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: cd0a7b77bd3d2494380065e05981cf3e, type: 2}
+    - target: {fileID: 4231329606122136378, guid: b317375605376c1448ac105e0213a797, type: 3}
+      propertyPath: m_Events.m_Events.Array.data[1].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4231329606122136378, guid: b317375605376c1448ac105e0213a797, type: 3}
+      propertyPath: m_Events.m_Events.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4231329606122136378, guid: b317375605376c1448ac105e0213a797, type: 3}
+      propertyPath: m_Events.m_Events.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 326186179}
+    - target: {fileID: 4231329606122136378, guid: b317375605376c1448ac105e0213a797, type: 3}
+      propertyPath: m_Events.m_Events.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4231329606122136378, guid: b317375605376c1448ac105e0213a797, type: 3}
+      propertyPath: m_Events.m_Events.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EndCutScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 4231329606122136378, guid: b317375605376c1448ac105e0213a797, type: 3}
+      propertyPath: m_Events.m_Events.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CutSceneController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4231329606122136378, guid: b317375605376c1448ac105e0213a797, type: 3}
+      propertyPath: m_Events.m_Events.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 4342468243242129591, guid: b317375605376c1448ac105e0213a797, type: 3}
       propertyPath: m_Name
       value: Stage1_Intro
@@ -537,6 +669,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b317375605376c1448ac105e0213a797, type: 3}
+--- !u!1 &8100738513456300957 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4342468243242129591, guid: b317375605376c1448ac105e0213a797, type: 3}
+  m_PrefabInstance: {fileID: 8100738513456300956}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -545,3 +682,4 @@ SceneRoots:
   - {fileID: 876167000}
   - {fileID: 1332662057}
   - {fileID: 8100738513456300956}
+  - {fileID: 326186178}

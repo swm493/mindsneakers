@@ -1,91 +1,98 @@
 using UnityEngine;
-using System;
+using UnityEngine.Events;
 
 public class DoubleDialogueController : BaseDialogueController<DoubleDialogueView, DoubleDialogueModel>
 {
+    [Header("Data")]
     [SerializeField] private DoubleDialogue dialogueData;
-    [SerializeField] private int dialogueGroupId;
+
+    [Header("Events")]
+    public UnityEvent OnDialogueStart;
+    public UnityEvent OnDialogueEnd;
+
+    private int dialogueGroupId;
 
     private void OnEnable()
     {
-        view.OnNextButtonClicked += HandleNextDialogue;
+        if (view != null) view.OnNextButtonClicked += HandleNextDialogue;
+        SetInputMode(true);
+        OnDialogueStart?.Invoke();
+        Initialize();
+        StartDialogue();
     }
 
     private void OnDisable()
     {
-        view.OnNextButtonClicked -= HandleNextDialogue;
+        if (view != null) view.OnNextButtonClicked -= HandleNextDialogue;
+        SetInputMode(false);
     }
 
     protected override void Initialize()
     {
         base.Initialize();
-
-        OnDialogueStart += StartDialogue;
-        DialogueManager.Instance.RegisterController(this);
-
         model = new DoubleDialogueModel(dialogueData);
+        SetDialogueId(SaveManager.Instance.playerData.level);
+        DialogueManager.Instance.RegisterController(this);
     }
 
-    public override void SetDialogueId(int groupId)
+    protected override void Release()
     {
-        dialogueGroupId = groupId;
+        DialogueManager.Instance.UnregisterController(this);
+        base.Release();
     }
 
-    public void StartDialogue()
+    public override void SetDialogueId(int groupId) => dialogueGroupId = groupId;
+
+    private void StartDialogue()
     {
-        while (model.HasDialougeData() && model.GetCurrentDialogue()?.Groupid != dialogueGroupId)
-        {
-            model.MoveNext();
-        }
+        while (model.HasDialougeData() && model.GetCurrentDialogue()?.Groupid != dialogueGroupId) model.MoveNext();
 
         if (model.HasDialougeData())
         {
             RefreshView();
+            ShowDialogue();
         }
         else
         {
             MyDebug.LogWarning($"No dialogue found for Group ID: {dialogueGroupId}");
+            EndDialogueSequence();
         }
     }
 
     private void HandleNextDialogue()
     {
-        if (view.IsTyping)
-        {
-            view.SkipTyping();
-            return;
-        }
+        if (view.IsTyping) { view.SkipTyping(); return; }
 
-        do
-        {
-            model.MoveNext();
-        }
+        do { model.MoveNext(); }
         while (model.HasDialougeData() && model.GetCurrentDialogue()?.Groupid != dialogueGroupId);
 
-        if (model.HasDialougeData())
-        {
-            RefreshView();
-        }
-        else
-        {
-            CloseDialogue();
-        }
+        if (model.HasDialougeData()) RefreshView();
+        else { CloseDialogue(); EndDialogueSequence(); }
     }
 
     private void RefreshView()
     {
         DoubleDialogueData currentData = model.GetCurrentDialogue();
         if (currentData == null) return;
-
         view.Show();
-
         view.SetContent(currentData.Context);
-
         view.SetSpeakerName(currentData.Leftname, currentData.Rightname);
         view.SetSpeakerImage(currentData.Leftimage, currentData.Rightimage);
         view.HighlightSpeaker(currentData.Activeside);
+    }
 
-        // string animTrigger = currentData.Activeside == "Left" ? currentData.LeftAnim : currentData.RightAnim;
-        // view.PlaySpeakerAnimation(currentData.Activeside == "Left", animTrigger);
+    private void EndDialogueSequence()
+    {
+        SaveManager.Instance.playerData.level += 1;
+        SetInputMode(false);
+        OnDialogueEnd?.Invoke();
+    }
+
+    private void SetInputMode(bool isDialogueMode)
+    {
+        var input = InputManager.Instance;
+        if (input == null) return;
+        if (isDialogueMode) { input.player.Disable(); input.UI.Enable(); }
+        else { input.player.Enable(); input.UI.Disable(); }
     }
 }

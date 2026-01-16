@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80e14a72067f1ad408ec8d661bc560ce, type: 3}
   m_Name: DoubleDialogueTable
   m_EditorClassIdentifier: Assembly-CSharp-Editor::UnityQuickSheet.ExcelMachine
-  templatePath: ThirdParty/QuickSheet/ExcelPlugin/Templates
+  templatePath: QuickSheet/ExcelPlugin/Templates
   scriptFilePath: Scripts/Data/Excel
   editorScriptFilePath: Scripts/Data/Excel/Editor
   sheetName: DialogueTable.xlsx

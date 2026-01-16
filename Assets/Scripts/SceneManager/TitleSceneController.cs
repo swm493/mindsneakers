@@ -8,7 +8,7 @@ public class TitleSceneController : MonoBehaviour
 
     public void Start()
     {
-        if (SaveManager.Instance.playerData.level > 1)
+        if (SaveManager.Instance.playerData.day > 1)
             button.interactable = false;
     }
 
@@ -16,11 +16,11 @@ public class TitleSceneController : MonoBehaviour
     {
         SaveManager.Instance.ResetData();
 
-        SceneManager.LoadScene("GameScene");
+        SceneTransitionManager.Instance.LoadScene("CutScene");
     }
 
     public void OnSaveButtonClicked()
     {
-        SceneManager.LoadScene("GameScene");
+        SceneTransitionManager.Instance.LoadScene("DialogueScene");
     }
 }

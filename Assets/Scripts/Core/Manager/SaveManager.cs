@@ -29,6 +29,7 @@ public class SaveManager : MonoSingleton<SaveManager>
     {
         playerData = new PlayerData
         {
+            day = 0,
             level = 0
         };
 
@@ -62,6 +63,19 @@ public class SaveManager : MonoSingleton<SaveManager>
 
     private void ApplyDataToGame()
     {
-        // TODO: 불러온 데이터를 게임 상태에 적용하는 로직 작성
+        switch (playerData.day)
+        {
+            case 0:
+                playerData.level = 0;
+                break;
+            case 1:
+                playerData.level = 2;
+                break;
+            case 2:
+                playerData.level = 6;
+                break;
+            default:
+                break;
+        }
     }
 }

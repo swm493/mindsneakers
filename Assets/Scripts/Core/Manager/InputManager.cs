@@ -16,4 +16,18 @@ public class InputManager : MonoSingleton<InputManager>
 
         inputActions.Enable();
     }
+
+    private void OnDestroy()
+    {
+        inputActions.Disable();
+    }
+
+    public void EnableInput()
+    {
+        inputActions.Enable();
+    }
+    public void DisableInput()
+    {
+        inputActions.Disable();
+    }
 }

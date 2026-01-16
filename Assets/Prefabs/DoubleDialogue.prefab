@@ -133,7 +133,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9066675894562296145
 RectTransform:
   m_ObjectHideFlags: 0
@@ -172,7 +172,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
+  m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -508,7 +508,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7125674083475201863
 Transform:
   m_ObjectHideFlags: 0
@@ -539,6 +539,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DoubleDialoguePresenter
   view: {fileID: 1103681400217295110}
   dialogueData: {fileID: 11400000, guid: eb413196a38f4fb4cbabd285195f42de, type: 2}
+  OnDialogueStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDialogueEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4996823381597022763
 GameObject:
   m_ObjectHideFlags: 0

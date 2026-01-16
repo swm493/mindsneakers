@@ -10,7 +10,6 @@ public abstract class BaseDialogueController<TView, TModel> : MonoBehaviour, IDi
 
     protected bool isInitialized = false;
 
-    public event Action OnDialogueStart;
     public event Action OnDialogueComplete;
 
     protected virtual void Awake()
@@ -37,9 +36,8 @@ public abstract class BaseDialogueController<TView, TModel> : MonoBehaviour, IDi
 
     protected virtual void Release() { }
 
-    public void ShowDialogue()
+    public virtual void ShowDialogue()
     {
-        OnDialogueStart?.Invoke();
         view.Show();
     }
 
