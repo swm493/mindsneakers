@@ -45,7 +45,6 @@ public abstract class BaseDialogueController<TView, TModel> : MonoBehaviour, IDi
 
     public void CloseDialogue()
     {
-        view.Hide();
         OnDialogueComplete?.Invoke();
     }
 
