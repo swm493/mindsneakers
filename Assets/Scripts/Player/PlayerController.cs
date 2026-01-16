@@ -190,7 +190,7 @@ public class PlayerController : MonoBehaviour
         anim.SetTrigger("EA");
 
         yield return new WaitForSeconds(0.2f);
-        Vector3 handPos = transform.position + new Vector3(0.5f * (transform.localScale.x > 0 ? 1 : -1), 0);
+        Vector3 handPos = transform.position + new Vector3(0.5f * (transform.localScale.x > 0 ? 1 : -1), 0.2f);
         Vector3 direction = (target.GetComponent<EnemyController>().headPos.position - handPos).normalized;
         GameObject particle = Instantiate(electricEffect, handPos, Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg));
         

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1884844943992305056}
   - component: {fileID: 4999165479916436806}
   - component: {fileID: 3684898843859265288}
-  m_Layer: 11
+  m_Layer: 5
   m_Name: HormoneFill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1351,7 +1351,7 @@ GameObject:
   - component: {fileID: 4589898098543592632}
   - component: {fileID: 2269401742125359304}
   - component: {fileID: 9174114816220496071}
-  m_Layer: 11
+  m_Layer: 5
   m_Name: EgoFill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1410,7 +1410,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.57
+  m_FillAmount: 0.632
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
