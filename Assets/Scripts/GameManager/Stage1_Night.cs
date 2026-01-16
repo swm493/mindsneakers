@@ -14,25 +14,29 @@ public class Stage1_Night : MonoBehaviour
         Instance = this;
     }
 
-    private bool target2_1 = false;
-    private bool target2_2 = false;
+    public bool target2_1 = false;
+    public bool target2_2 = false;
     [SerializeField] private GameObject target2_2Object;
     [SerializeField] private GameObject doorObject;
+    [SerializeField] private GameObject skillUI;
+    [SerializeField] private GameObject easterEgg1;
+    [SerializeField] private GameObject easterEgg2;
+    [SerializeField] private GameObject easterEgg3;
 
     public void Interact(PlayerController player, Collider2D collider)
     {
         switch (collider.gameObject.name)
         {
             case "EasterEgg1":
-                Debug.Log("이스터에그1");
+                OpenEasterEgg1(player);
                 break;
 
             case "EasterEgg2":
-                Debug.Log("이스터에그2");
+                OpenEasterEgg2(player);
                 break;
 
             case "EasterEgg3":
-                Debug.Log("이스터에그3");
+                OpenEasterEgg3(player);
                 break;
 
             case "Target1":
@@ -48,21 +52,43 @@ public class Stage1_Night : MonoBehaviour
             case "Target2-3":
                 
                 break;
-            
-            default:
-                Debug.Log("등록되지 않은 상호작용");
-                break;
         }
+    }
+
+    private void OpenEasterEgg1(PlayerController player)
+    {
+        skillUI.SetActive(false);
+        easterEgg1.SetActive(true);
+    }
+
+    private void OpenEasterEgg2(PlayerController player)
+    {
+        skillUI.SetActive(false);
+        easterEgg2.SetActive(true);
+    }
+
+    private void OpenEasterEgg3(PlayerController player)
+    {
+        skillUI.SetActive(false);
+        easterEgg3.SetActive(true);
     }
 
     private void OpenDoor()
     {
-        doorObject.SetActive(false);
+        if (doorObject != null) doorObject.SetActive(false);
+    }
+
+    public void OpenSkillUI()
+    {
+        skillUI.SetActive(true);
+        easterEgg1.SetActive(false);
+        easterEgg2.SetActive(false);
+        easterEgg3.SetActive(false);
     }
 
     private void Update()
     {
-        if (target2_2Object.GetComponent<EnemyController>().stunned)
+        if (target2_2Object != null && target2_2Object.GetComponent<EnemyController>().stunned)
         {
             target2_2 = true;
             if (target2_1)

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEditor.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -250,6 +251,7 @@ public class PlayerController : MonoBehaviour
         anim.SetTrigger("OffInteraction");
         player.EnableMovement();
         isInteractioning = false;
+        Stage1_Night.Instance.OpenSkillUI();
     }
 
 
