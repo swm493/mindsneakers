@@ -1,26 +1,38 @@
 using UnityEngine;
+using System;
 
-public class DoubleDialogueController : BaseUIController<DoubleDialogueView, DoubleDialogueModel>
+public class DoubleDialogueController : BaseDialogueController<DoubleDialogueView, DoubleDialogueModel>
 {
     [SerializeField] private DoubleDialogue dialogueData;
-    private int dialogueGroupId;
+    [SerializeField] private int dialogueGroupId;
 
-    protected override void OnInitialize()
+    private void OnEnable()
     {
-        base.OnInitialize();
-        model = new DoubleDialogueModel(dialogueData);
         view.OnNextButtonClicked += HandleNextDialogue;
     }
 
-    protected override void Release()
+    private void OnDisable()
     {
         view.OnNextButtonClicked -= HandleNextDialogue;
-        base.Release();
     }
 
-    public void StartDialogue(int groupId)
+    protected override void Initialize()
+    {
+        base.Initialize();
+
+        OnDialogueStart += StartDialogue;
+        DialogueManager.Instance.RegisterController(this);
+
+        model = new DoubleDialogueModel(dialogueData);
+    }
+
+    public override void SetDialogueId(int groupId)
     {
         dialogueGroupId = groupId;
+    }
+
+    public void StartDialogue()
+    {
         while (model.HasDialougeData() && model.GetCurrentDialogue()?.Groupid != dialogueGroupId)
         {
             model.MoveNext();
@@ -75,10 +87,5 @@ public class DoubleDialogueController : BaseUIController<DoubleDialogueView, Dou
 
         // string animTrigger = currentData.Activeside == "Left" ? currentData.LeftAnim : currentData.RightAnim;
         // view.PlaySpeakerAnimation(currentData.Activeside == "Left", animTrigger);
-    }
-
-    public void CloseDialogue()
-    {
-        view.Hide();
     }
 }

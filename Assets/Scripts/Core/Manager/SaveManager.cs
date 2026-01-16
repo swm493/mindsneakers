@@ -1,0 +1,67 @@
+using UnityEngine;
+using System.IO;
+
+public class SaveManager : MonoSingleton<SaveManager>
+{
+    public PlayerData playerData = new();
+
+    private string saveFilePath;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        saveFilePath = Path.Combine(Application.persistentDataPath, "savefile.json");
+    }
+
+    private void Start()
+    {
+        if (!File.Exists(saveFilePath))
+        {
+            ResetData();
+        }
+        else
+        {
+            LoadGame();
+        }
+    }
+
+    public void ResetData()
+    {
+        playerData = new PlayerData
+        {
+            level = 0
+        };
+
+        SaveGame();
+        ApplyDataToGame();
+        MyDebug.Log("데이터 초기화 완료");
+    }
+
+    public void SaveGame()
+    {
+        string json = JsonUtility.ToJson(playerData, true);
+
+        File.WriteAllText(saveFilePath, json);
+
+        MyDebug.Log("저장 완료: " + saveFilePath);
+    }
+
+    public void LoadGame()
+    {
+        if (!File.Exists(saveFilePath))
+        {
+            MyDebug.LogError("저장된 파일이 없습니다!");
+            return;
+        }
+
+        string json = File.ReadAllText(saveFilePath);
+        playerData = JsonUtility.FromJson<PlayerData>(json);
+        ApplyDataToGame();
+        MyDebug.Log("로드 완료");
+    }
+
+    private void ApplyDataToGame()
+    {
+        // TODO: 불러온 데이터를 게임 상태에 적용하는 로직 작성
+    }
+}
