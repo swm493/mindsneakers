@@ -586,6 +586,8 @@ MonoBehaviour:
   light: {fileID: 1911040121819342919}
   beamPrefab: {fileID: 3389916455697367757, guid: a50b5fb196a1f73438c647f7b4c64a5d, type: 3}
   tower: {fileID: 450420049460072304}
+  beamSfx: {fileID: 8300000, guid: 44bc1eaed836fee4e9a08f5bd03df456, type: 3}
+  buttonSfx: {fileID: 8300000, guid: 49937c72312d0404e8fd6c31694565d4, type: 3}
 --- !u!1 &4701014701739732576
 GameObject:
   m_ObjectHideFlags: 0

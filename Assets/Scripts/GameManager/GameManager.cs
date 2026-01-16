@@ -47,8 +47,19 @@ public class GameManager : MonoBehaviour
         Cursor.SetCursor(redDot, new Vector2(cursorTexture.width / 2f, cursorTexture.height / 2f), CursorMode.Auto);
     }
 
-    public void StageClear()
+    public void RestartScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void NextScene()
     {
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void StageClear()
+    {
+        stageNumber += 1;
+        Destroy(Stage1_Night.Instance.gameObject);
     }
 }

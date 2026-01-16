@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
-using Unity.VisualScripting;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -23,13 +22,13 @@ public class PlayerMove : MonoBehaviour
     private bool onDashCooldown = false;
 
     public Rigidbody2D rb;
-    public CapsuleCollider2D cc;
+    public BoxCollider2D bc;
     public Animator anim;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        cc = GetComponent<CapsuleCollider2D>();
+        bc = GetComponent<BoxCollider2D>();
         anim = GetComponent<Animator>();
     }
 
@@ -41,8 +40,8 @@ public class PlayerMove : MonoBehaviour
     private void FixedUpdate()
     {
         //바닥 체크
-        if (Physics2D.OverlapBox(transform.position - new Vector3(0, cc.size.y * transform.localScale.y / 2, 0),
-                    new Vector3(0.95f, 0.1f, 0), 0, LayerMask.GetMask("Ground", "Platform")))
+        if (Physics2D.OverlapBox(transform.position - new Vector3(0, transform.localScale.y * bc.size.y / 2, 0),
+                    new Vector3(0.95f, 0.2f, 0), 0, LayerMask.GetMask("Ground", "Platform")))
                     //원점 : 플레이어의 발, 크기 : 가로는 0.95칸, 세로는 0.1칸
         {
             onGround = true;
@@ -112,8 +111,8 @@ public class PlayerMove : MonoBehaviour
         {
             if (isDowning) //플랫폼 아래로 점프
             {
-                Collider2D[] platforms = Physics2D.OverlapBoxAll(transform.position - new Vector3(0, cc.size.y * transform.localScale.y / 2, 0),
-                            new Vector3(cc.size.x * Mathf.Abs(transform.localScale.x), 0.1f, 0), 0, LayerMask.GetMask("Platform"));
+                Collider2D[] platforms = Physics2D.OverlapBoxAll(transform.position - new Vector3(0, transform.localScale.y * bc.size.y / 2, 0),
+                            new Vector3(0.95f, 0.2f, 0), 0, LayerMask.GetMask("Platform"));
                 if (platforms.Length != 0)
                     StartCoroutine(DropfromPlatform(platforms));
             }
@@ -129,12 +128,12 @@ public class PlayerMove : MonoBehaviour
     private IEnumerator DropfromPlatform(Collider2D[] platforms) //플랫폼에서 떨어지기
     {
         float init_pos = transform.position.y;
-        foreach (Collider2D platform in platforms) Physics2D.IgnoreCollision(cc, platform, true);
+        foreach (Collider2D platform in platforms) Physics2D.IgnoreCollision(bc, platform, true);
         while (true)
         {
-            if (init_pos - transform.position.y > cc.size.y * transform.localScale.y / 2)
+            if (init_pos - transform.position.y > 1f)
             {
-                foreach (Collider2D platform in platforms) Physics2D.IgnoreCollision(cc, platform, false);
+                foreach (Collider2D platform in platforms) Physics2D.IgnoreCollision(bc, platform, false);
                 break;
             }
             yield return null;
@@ -217,7 +216,7 @@ public class PlayerMove : MonoBehaviour
         moveEnabled = false;
     }
 
-    public void StopMovement()
+    public void StopMovement() //모든 움직임 정지
     {
         rb.linearVelocity = Vector2.zero;
         rb.gravityScale = 0;
@@ -227,7 +226,7 @@ public class PlayerMove : MonoBehaviour
     public void EnableMovement() //이동 활성화
     {
         rb.gravityScale = GameManager.Instance.gravityScale;
-        cc.enabled = true;
+        bc.enabled = true;
         moveEnabled = true;
     }
 }

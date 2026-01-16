@@ -239,7 +239,7 @@ GameObject:
   - component: {fileID: 2468590232687122670}
   - component: {fileID: 6138185274745751072}
   - component: {fileID: 5889885970754793764}
-  - component: {fileID: 3625728388234992814}
+  - component: {fileID: 8036718591891333464}
   - component: {fileID: 7056989015902701398}
   - component: {fileID: 8014954050398345691}
   - component: {fileID: 8311267085384251434}
@@ -354,8 +354,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!70 &3625728388234992814
-CapsuleCollider2D:
+--- !u!61 &8036718591891333464
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -388,9 +388,18 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.002428106, y: 0.0005394902}
-  m_Size: {x: 0.12356416, y: 0.2602883}
-  m_Direction: 0
+  m_Offset: {x: -0.004460007, y: 0.015779883}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 0.15, y: 0.27}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.1585423, y: 0.28159666}
+  m_EdgeRadius: 0
 --- !u!114 &7056989015902701398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -664,7 +673,7 @@ MonoBehaviour:
   onBush: 0
   isDashing: 0
   rb: {fileID: 0}
-  cc: {fileID: 0}
+  bc: {fileID: 0}
   anim: {fileID: 0}
 --- !u!114 &2921665201158528846
 MonoBehaviour:
@@ -680,8 +689,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onNeuron: 0
   isInteractioning: 0
-  onEACool: 0
   spark: {fileID: 4037656984449329410}
   feelMindPrefab: {fileID: 6290147855330923290, guid: 8b9950a6931aeb640ab83966785d9f14, type: 3}
+  electricEffect: {fileID: 2100369594429485508, guid: 5f6feda07ebc2b543a7575c854ccf829, type: 3}
   chocolateBombPrefab: {fileID: 5073275701327029519, guid: 15b19c62bdb22c743a6ec4c8095f0c4c, type: 3}
   goalTransform: {fileID: 0}
+  specialSkillSfx: {fileID: 8300000, guid: 3451a795968c30f428e8ae61619047c2, type: 3}
+  electricalSfx: {fileID: 8300000, guid: f8816825ca165e9489aad04157ebd2b0, type: 3}

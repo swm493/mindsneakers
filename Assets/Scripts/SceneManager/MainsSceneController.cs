@@ -11,6 +11,7 @@ public class MainSceneController : MonoBehaviour
 
     private void Start()
     {
+        SceneTransitionManager.Instance.gameObject.SetActive(true);
         InputSystem.onAnyButtonPress.CallOnce(ctrl => OnAnyKeyPress());
     }
 

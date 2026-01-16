@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     private int currentHRM;
     private bool onDamageCool = false;
     private bool onSpecialSkillCool = false;
-    [SerializeField]private bool onEACool = false;
+    private bool onEACool = false;
     private bool onCortisolCool = false;
     private bool onFMCool = false;
     private Collider2D target = null;
@@ -27,10 +27,13 @@ public class PlayerController : MonoBehaviour
     private Image feelMindUI;
     [SerializeField] private GameObject spark;
     [SerializeField] private GameObject feelMindPrefab;
+    [SerializeField] private GameObject electricEffect;
     [SerializeField] private GameObject chocolateBombPrefab;
     [SerializeField] private Transform goalTransform;
+    [SerializeField] private AudioClip specialSkillSfx;
+    [SerializeField] private AudioClip electricalSfx;
 
-    private CapsuleCollider2D cc;
+    private BoxCollider2D bc;
     private PlayerMove player;
     private Rigidbody2D rb;
     private Animator anim;
@@ -38,7 +41,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        cc = GetComponent<CapsuleCollider2D>();
+        bc = GetComponent<BoxCollider2D>();
         player = GetComponent<PlayerMove>();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
@@ -83,7 +86,7 @@ public class PlayerController : MonoBehaviour
             if (currentEgo <= 0)
             {
                 currentEgo = 0;
-                Debug.Log("플레이어 사망"); /*******************************/
+                StartCoroutine(Death());
             }
         }
     }
@@ -92,6 +95,13 @@ public class PlayerController : MonoBehaviour
         onDamageCool = true;
         yield return new WaitForSeconds(0.5f);
         onDamageCool = false;
+    }
+    private IEnumerator Death()
+    {
+        player.DisableMovement();
+        GetComponent<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(2f);
+        GameManager.Instance.RestartScene();
     }
 
 
@@ -104,8 +114,13 @@ public class PlayerController : MonoBehaviour
             {
                 target.GetComponent<EnemyController>().GetShocked();
 
-                StartCoroutine(EAAnimation());
+                StartCoroutine(EAAnimation(target));
                 StartCoroutine(EATimer());
+                AudioManager.Instance.Play(electricalSfx, 0.5f);
+            }
+            else if (isInteractioning)
+            {
+                EndInteraction();
             }
         }
     }
@@ -116,7 +131,7 @@ public class PlayerController : MonoBehaviour
 
         float max_distance = 6f;
         Vector2 enemyHeadPos;
-        Vector2 playerHeadPos = transform.position + new Vector3(0, cc.size.y * transform.localScale.y / 4f, 0);
+        Vector2 playerHeadPos = transform.position + new Vector3(0, bc.size.y * transform.localScale.y / 4f, 0);
         Collider2D closest_enemy = null;
         foreach (Collider2D enemy in enemies)
         {
@@ -164,7 +179,7 @@ public class PlayerController : MonoBehaviour
             target = null;
         }
     }
-    public IEnumerator EAAnimation() //전기마취 애니메이션
+    public IEnumerator EAAnimation(Collider2D target) //전기마취 애니메이션
     {
         Vector2 init_velocity = rb.linearVelocity;
         player.StopMovement();
@@ -173,7 +188,20 @@ public class PlayerController : MonoBehaviour
         anim.SetBool("SameDirection", sameDirection);
         anim.SetTrigger("EA");
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
+        Vector3 handPos = transform.position + new Vector3(0.5f * (transform.localScale.x > 0 ? 1 : -1), 0);
+        Vector3 direction = (target.GetComponent<EnemyController>().headPos.position - handPos).normalized;
+        GameObject particle = Instantiate(electricEffect, handPos, Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg));
+        
+        float startTime = Time.time;
+        while (Time.time - startTime < 0.1f)
+        {
+            particle.transform.localScale += new Vector3(Time.deltaTime * 4f, 0);
+            yield return null;
+        }
+        Destroy(particle);
+        yield return new WaitForSeconds(0.2f);
+
         rb.linearVelocity = init_velocity;
         player.EnableMovement();
     }
@@ -199,7 +227,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (collider.gameObject.layer == LayerMask.NameToLayer("Goal") && !isClearing) //마음의 핵
                 {
-                    collider.GetComponent<Goal>().GameClear(cc, player);
+                    collider.GetComponent<Goal>().GameClear(bc, player);
                     isClearing = true;
                 }
                 else if (collider.gameObject.layer == LayerMask.NameToLayer("NeuronHead") && !onNeuron) //뉴런
@@ -209,12 +237,19 @@ public class PlayerController : MonoBehaviour
                 }
                 else if (collider.gameObject.layer == LayerMask.NameToLayer("Interaction") && !isInteractioning) //상호작용 오브젝트
                 {
-                    //collider.GetComponent<InteractionObject>().StartInteraction(player, cc);
-                    anim.SetBool("IsInteractioning", true);
+                    Stage1_Night.Instance.Interact(this, collider);
+                    player.DisableMovement();
+                    anim.SetTrigger("Interaction");
                     isInteractioning = true;
                 }
             }
         }
+    }
+    public void EndInteraction()
+    {
+        anim.SetTrigger("OffInteraction");
+        player.EnableMovement();
+        isInteractioning = false;
     }
 
 
@@ -250,8 +285,8 @@ public class PlayerController : MonoBehaviour
     }
     private IEnumerator FeelMindParticle(Vector3 feelMindPosition, Vector3 goalDirection)
     {
-        GameObject feelMindParticle = Instantiate(feelMindPrefab, feelMindPosition, Quaternion.identity);
-        feelMindParticle.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(goalDirection.y, goalDirection.x) * Mathf.Rad2Deg);
+        GameObject feelMindParticle = Instantiate(feelMindPrefab, feelMindPosition,
+            Quaternion.Euler(0, 0, Mathf.Atan2(goalDirection.y, goalDirection.x) * Mathf.Rad2Deg));
         SpriteRenderer FM_sr = feelMindParticle.GetComponent<SpriteRenderer>();
 
         for (float i = 0; i < 1f; i += Time.deltaTime * 2f)
@@ -324,10 +359,10 @@ public class PlayerController : MonoBehaviour
             if (currentHRM > 0)
             {
                 currentHRM--;
+                AudioManager.Instance.Play(specialSkillSfx, 0.5f);
                 switch (GameManager.Instance.stageNumber)
                 {
                     case 1:
-                        Debug.Log("초콜릿 폭탄 발동");
                         StartCoroutine(ChocolateBomb());
                         anim.SetTrigger("SpecialSkill");
                         StartCoroutine(SpecialSkillTimer(5f));

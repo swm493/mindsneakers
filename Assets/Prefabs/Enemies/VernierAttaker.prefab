@@ -908,8 +908,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af167ed2a06cecd488806f787e94f352, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aggroGauge: 0
-  attackEnabled: 1
   startAttack: {fileID: 8957099783814595193}
   aggroGaugeBar: {fileID: 6950235702920617119}
   cortisolPrefab: {fileID: 6290147855330923290, guid: 8505e08b9768d0a49afd320cfd451ef9, type: 3}
@@ -917,8 +915,7 @@ MonoBehaviour:
   moveSpeed: 3
   sightRange: 3.5
   isSleeping: 0
-  isWanderingType: 0
-  destinations: []
+  destination: {fileID: 0}
 --- !u!114 &6736429300040958112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -932,3 +929,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   calliper: {fileID: 729868759668367706}
+  attackSfx: {fileID: 8300000, guid: d4adf736baea54949a91a7cb8b9d5ccb, type: 3}

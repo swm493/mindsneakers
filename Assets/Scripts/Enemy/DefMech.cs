@@ -1,16 +1,15 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-using Unity.VisualScripting;
 
 [RequireComponent(typeof(EnemyController))]
 public class DefMechanism : MonoBehaviour
 {
     //방어기제 공통 시스템 관리 (어그로 게이지 등)
-    public float aggroGauge = 0;
-    private int maxAggroGauge = 4;
+    private float aggroGauge = 0;
+    private int maxAggroGauge = 6;
     private bool isAttacking = false;
-    public bool attackEnabled = true;
+    private bool attackEnabled = true;
     [SerializeField] private Collider2D startAttack;
     [SerializeField] private Image aggroGaugeBar;
     [SerializeField] private GameObject cortisolPrefab;
@@ -180,7 +179,6 @@ public class DefMechanism : MonoBehaviour
     private bool IsInSight()
     {
         RaycastHit2D player = Physics2D.Raycast(transform.position, ec.lookingDirection, sightRange, LayerMask.GetMask("Player", "Wall", "Ground"));
-        Debug.DrawRay(transform.position, ec.lookingDirection * sightRange, Color.red);
         
         return player.collider != null && player.collider.gameObject.CompareTag("Player")
                 && Mathf.Abs(player.transform.position.y - transform.position.y) < 6f

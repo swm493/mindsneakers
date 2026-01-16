@@ -32,7 +32,7 @@ public class CutSceneController : MonoBehaviour
                 SceneTransitionManager.Instance.LoadScene("DialogueScene");
                 break;
             case 1:
-                SceneTransitionManager.Instance.LoadScene("Stage1_Night_Pt1");
+                SceneTransitionManager.Instance.LoadScene("Stage1_Night1");
                 break;
             default:
                 Debug.LogError("No cutscene available for this day.");

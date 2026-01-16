@@ -722,8 +722,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af167ed2a06cecd488806f787e94f352, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aggroGauge: 0
-  attackEnabled: 1
   startAttack: {fileID: 8957099783814595193}
   aggroGaugeBar: {fileID: 9061829965031604550}
   cortisolPrefab: {fileID: 6290147855330923290, guid: 8505e08b9768d0a49afd320cfd451ef9, type: 3}
@@ -731,7 +729,6 @@ MonoBehaviour:
   moveSpeed: 3
   sightRange: 3.5
   isSleeping: 0
-  isWanderingType: 0
   destination: {fileID: 0}
 --- !u!114 &2709040603528287308
 MonoBehaviour:
@@ -748,6 +745,8 @@ MonoBehaviour:
   acid: {fileID: 1045078103347871398, guid: effbd14ded2dd944c89f5b825263ab10, type: 3}
   acidParticle: {fileID: 6049660716057619435, guid: 3164b65a2d30df54a9a067efe1627196, type: 3}
   beakerParticle: {fileID: 5641342373412939256, guid: affac05992dda294687339fdc7fc152f, type: 3}
+  acidSfx: {fileID: 8300000, guid: bd40b944cb6c65b479c640294c539c85, type: 3}
+  beakerSfx: {fileID: 8300000, guid: f20d5faad0b5d7346b6b3664c0cdd4f9, type: 3}
   gravity: 40
   speed: 15
   attacklevel: 1

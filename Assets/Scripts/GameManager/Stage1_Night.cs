@@ -1,39 +1,79 @@
 using UnityEngine;
+using System.Collections;
 
 public class Stage1_Night : MonoBehaviour
 {
-    private int count = 0;
-
-    [SerializeField] private GameObject object1;
-    [SerializeField] private GameObject object2;
-    [SerializeField] private GameObject door;
-
-    private EnterTrigger et_object1;
-    private EnterTrigger et_object2;
-
+    public static Stage1_Night Instance { get; private set; }
     private void Awake()
     {
-        et_object1 = object1.GetComponent<EnterTrigger>();
-        et_object2 = object2.GetComponent<EnterTrigger>();
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
+
+    private bool target2_1 = false;
+    private bool target2_2 = false;
+    [SerializeField] private GameObject target2_2Object;
+    [SerializeField] private GameObject doorObject;
+
+    public void Interact(PlayerController player, Collider2D collider)
+    {
+        switch (collider.gameObject.name)
+        {
+            case "EasterEgg1":
+                Debug.Log("이스터에그1");
+                break;
+
+            case "EasterEgg2":
+                Debug.Log("이스터에그2");
+                break;
+
+            case "EasterEgg3":
+                Debug.Log("이스터에그3");
+                break;
+
+            case "Target1":
+                StartCoroutine(NextArea(player));
+                break;
+
+            case "Target2-1":
+                target2_1 = true;
+                if (target2_2)
+                    OpenDoor();
+                break;
+
+            case "Target2-3":
+                
+                break;
+            
+            default:
+                Debug.Log("등록되지 않은 상호작용");
+                break;
+        }
+    }
+
+    private void OpenDoor()
+    {
+        doorObject.SetActive(false);
     }
 
     private void Update()
     {
-        if (et_object1.GetCollider() != null && et_object1.GetCollider().CompareTag("Player"))
+        if (target2_2Object.GetComponent<EnemyController>().stunned)
         {
-            count++;
-            Debug.Log("목표1 도달");
-            object1.SetActive(false); 
+            target2_2 = true;
+            if (target2_1)
+                OpenDoor();
         }
-        if (et_object2.GetCollider() != null && et_object2.GetCollider().CompareTag("Player"))
-        {
-            count++;
-            Debug.Log("목표2 도달");
-            object2.SetActive(false); 
-        }
-        if (count == 2)
-        {
-            door.SetActive(false);
-        }
+    }
+
+    private IEnumerator NextArea(PlayerController player)
+    {
+        yield return new WaitForSeconds(2f);
+        DontDestroyOnLoad(gameObject);
+        GameManager.Instance.NextScene();
     }
 }
