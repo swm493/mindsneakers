@@ -29,7 +29,7 @@ public class SaveManager : MonoSingleton<SaveManager>
     {
         playerData = new PlayerData
         {
-            day = 0,
+            Day = 0,
             level = 0
         };
 
@@ -63,13 +63,11 @@ public class SaveManager : MonoSingleton<SaveManager>
 
     private void ApplyDataToGame()
     {
-        switch (playerData.day)
+        switch (playerData.Day)
         {
             case 0:
-                playerData.level = 0;
-                break;
             case 1:
-                playerData.level = 2;
+                playerData.level = 0;
                 break;
             case 2:
                 playerData.level = 6;

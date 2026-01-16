@@ -7,7 +7,7 @@ public class CutSceneController : MonoBehaviour
     [SerializeField] private GameObject[] cutScenes;
     private void Start()
     {
-        int currentDay = SaveManager.Instance.playerData.day;
+        int currentDay = SaveManager.Instance.playerData.Day;
         switch (currentDay)
         {
             case 0:
@@ -24,11 +24,11 @@ public class CutSceneController : MonoBehaviour
 
     public void EndCutScene()
     {
-        int currentDay = SaveManager.Instance.playerData.day;
+        int currentDay = SaveManager.Instance.playerData.Day;
         switch (currentDay)
         {
             case 0:
-                SaveManager.Instance.playerData.day += 1;
+                SaveManager.Instance.playerData.Day += 1;
                 SceneTransitionManager.Instance.LoadScene("DialogueScene");
                 break;
             case 1:

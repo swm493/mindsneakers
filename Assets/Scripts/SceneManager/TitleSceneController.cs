@@ -8,7 +8,7 @@ public class TitleSceneController : MonoBehaviour
 
     public void Start()
     {
-        if (SaveManager.Instance.playerData.day > 1)
+        if (SaveManager.Instance.playerData.Day == 0)
             button.interactable = false;
     }
 
