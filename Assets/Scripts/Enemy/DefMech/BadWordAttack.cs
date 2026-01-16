@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using Unity.VisualScripting;
 
 public class BadWordAttack : MonoBehaviour
 {
@@ -11,6 +10,7 @@ public class BadWordAttack : MonoBehaviour
 
     [SerializeField] private GameObject BadWordBeam;
     [SerializeField] private GameObject BadWordParticle;
+    [SerializeField] private AudioClip badWordSfx;
 
     private void Awake()
     {
@@ -24,14 +24,16 @@ public class BadWordAttack : MonoBehaviour
     {
         rb.linearVelocityX = 0;
         anim.SetTrigger("Attack"); //확성기 들기
-        yield return new WaitForSeconds(1f); //선딜
+        yield return new WaitForSeconds(0.5f); //선딜
+        AudioManager.Instance.Play(badWordSfx, 0.5f);
+        yield return new WaitForSeconds(0.5f);
 
         int shootDirection = ec.SightXInt();
         Vector3 spawnOffset = new Vector3(0.5f * shootDirection, 0.2f);
         GameObject laser = Instantiate(BadWordBeam, transform.position + spawnOffset, Quaternion.identity);
         laser.transform.localScale = new Vector3(0.6f * shootDirection, laser.transform.localScale.y);
+        
         float startTime = Time.time;
-
         StartCoroutine(SpawnParticle(spawnOffset, shootDirection));
         while (Time.time - startTime < 1f)
         {

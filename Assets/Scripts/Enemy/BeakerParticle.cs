@@ -1,6 +1,4 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using System.Collections;
 
 public class BeakerParticle : MonoBehaviour
 {

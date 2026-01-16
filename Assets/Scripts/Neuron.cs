@@ -38,7 +38,7 @@ public class Neuron : MonoBehaviour
     private IEnumerator SendSignalAnim(PlayerMove player, GameObject spark)
     {
         player.rb.gravityScale = 0f;
-        player.cc.enabled = false;
+        player.bc.enabled = false;
         player.rb.linearVelocityY = 0f;
         int sightRight = player.transform.localScale.x > 0 ? 1 : -1;
         //머리

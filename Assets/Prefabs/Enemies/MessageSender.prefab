@@ -347,6 +347,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   light: {fileID: 8574436011139419267}
+  sendSfx: {fileID: 8300000, guid: cd95fa34fcab5a3488ba89a4f14365d4, type: 3}
 --- !u!1 &7366594247830863937
 GameObject:
   m_ObjectHideFlags: 0

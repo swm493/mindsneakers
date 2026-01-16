@@ -7,9 +7,11 @@ public class VernierAttack : MonoBehaviour
     private Animator anim;
     private EnemyController ec;
     private DefMechanism dm;
+    private EnterTrigger calliper_et;
 
     [SerializeField] private Collider2D calliper;
-    private EnterTrigger calliper_et;
+    [SerializeField] private AudioClip attackSfx;
+    
 
     private void Awake()
     {
@@ -33,7 +35,7 @@ public class VernierAttack : MonoBehaviour
         if (ec.stunned) yield break;
         rb.linearVelocityX = 9f * ec.SightXInt();
 
-        
+        AudioManager.Instance.Play(attackSfx, 0.5f);
         float startTime = Time.time;
         while (Time.time - startTime < 0.25f)
         {

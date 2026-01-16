@@ -9,7 +9,10 @@ public class MessageSender : MonoBehaviour
     private EnterTrigger et;
     private EnemyController ec;
 
+    private bool EAOffset = false;
+
     [SerializeField] private new GameObject light;
+    [SerializeField] private AudioClip sendSfx;
 
     private void Awake()
     {
@@ -29,11 +32,19 @@ public class MessageSender : MonoBehaviour
                 isWorking = true;
             }
         }
+        else if (!EAOffset)
+        {
+            EAOffset = true;
+            GetComponent<Rigidbody2D>().gravityScale = 0;
+            transform.localPosition = new Vector3(-0.7f * ec.SightXInt(), -1.2f, 0);
+            GetComponent<SpriteRenderer>().flipX = false;
+        }
     }
 
     private IEnumerator SendMessageToEnemy()
     {
         anim.SetTrigger("Send");
+        AudioManager.Instance.Play(sendSfx, 0.8f);
         yield return new WaitForSeconds(3f);
 
         Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, 13f, LayerMask.GetMask("Enemy"));

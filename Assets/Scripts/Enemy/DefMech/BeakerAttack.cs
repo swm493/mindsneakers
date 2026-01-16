@@ -1,12 +1,13 @@
 using UnityEngine;
 using System.Collections;
-using System;
 
 public class BeakerAttack : MonoBehaviour
 {
     [SerializeField] private GameObject acid;
     [SerializeField] private GameObject acidParticle;
     [SerializeField] private GameObject beakerParticle;
+    [SerializeField] private AudioClip acidSfx;
+    [SerializeField] private AudioClip beakerSfx;
 
     public float gravity = 3f;
     public float speed = 5f;
@@ -27,6 +28,7 @@ public class BeakerAttack : MonoBehaviour
         yield return new WaitForSeconds(0.5f); //선딜
 
         anim.SetTrigger("Attack1");
+        AudioManager.Instance.Play(acidSfx, 0.5f);
 
         yield return new WaitForSeconds(0.1f);
         Vector3 spawnPos = transform.position + new Vector3(1f, 0f);
@@ -53,6 +55,7 @@ public class BeakerAttack : MonoBehaviour
         anim.SetTrigger("Attack2");
 
         yield return new WaitForSeconds(0.5f); //선딜
+        AudioManager.Instance.Play(beakerSfx, 0.5f);
 
         GameObject particle = Instantiate(beakerParticle, transform.position, Quaternion.identity);
         particle.GetComponent<Rigidbody2D>().linearVelocity = speed / 2 * 

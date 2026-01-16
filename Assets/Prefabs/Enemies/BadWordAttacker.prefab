@@ -722,8 +722,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af167ed2a06cecd488806f787e94f352, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aggroGauge: 0
-  attackEnabled: 1
   startAttack: {fileID: 4871307251637287845}
   aggroGaugeBar: {fileID: 4324254786888959451}
   cortisolPrefab: {fileID: 6290147855330923290, guid: 8505e08b9768d0a49afd320cfd451ef9, type: 3}
@@ -731,8 +729,7 @@ MonoBehaviour:
   moveSpeed: 3
   sightRange: 3.5
   isSleeping: 0
-  isWanderingType: 0
-  destinations: []
+  destination: {fileID: 0}
 --- !u!114 &3927517123698419775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -747,3 +744,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BadWordBeam: {fileID: 3389916455697367757, guid: 516952b326ec1494a965c3bb82f4c345, type: 3}
   BadWordParticle: {fileID: 6919179123388774674, guid: e39500ce05f3a5b48b8a6c375c066a65, type: 3}
+  badWordSfx: {fileID: 8300000, guid: 9eb81719d2f00ec428043c90ebd2fdcb, type: 3}
