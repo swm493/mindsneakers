@@ -1,0 +1,740 @@
+fileFormatVersion: 2
+guid: 69537c6f3284ce044a85d7e5180dacb6
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8323744275865747470
+    second: tower2-character-alert_0
+  - first:
+      213: 2070245180495654686
+    second: tower2-character-alert_1
+  - first:
+      213: -8370698319703884867
+    second: tower2-character-alert_2
+  - first:
+      213: 2824096929198765957
+    second: tower2-character-alert_3
+  - first:
+      213: -8087336072978668671
+    second: tower2-character-alert_4
+  - first:
+      213: 1479482041597526015
+    second: tower2-character-alert_5
+  - first:
+      213: -8208779044245479789
+    second: tower2-character-alert_6
+  - first:
+      213: -5586766411672409480
+    second: tower2-character-alert_7
+  - first:
+      213: 9046976194891950325
+    second: tower2-character-alert_8
+  - first:
+      213: -3968530496081100498
+    second: tower2-character-alert_9
+  - first:
+      213: 5136085048787621375
+    second: tower2-character-alert_10
+  - first:
+      213: -254044736254507104
+    second: tower2-character-alert_11
+  - first:
+      213: 7411441041135598009
+    second: tower2-character-alert_12
+  - first:
+      213: -4064383932676930722
+    second: tower2-character-alert_13
+  - first:
+      213: 883715111199967225
+    second: tower2-character-alert_14
+  - first:
+      213: 673025583121240758
+    second: tower2-character-alert_15
+  - first:
+      213: -4848596333967777621
+    second: tower2-character-alert_16
+  - first:
+      213: -5254429904148984164
+    second: tower2-character-alert_17
+  - first:
+      213: -5685798615376906486
+    second: tower2-character-alert_18
+  - first:
+      213: -8698056010431081503
+    second: tower2-character-alert_19
+  - first:
+      213: -2146232229581314090
+    second: tower2-character-alert_20
+  - first:
+      213: 7915518608092932350
+    second: tower2-character-alert_21
+  - first:
+      213: -4633396035935957090
+    second: tower2-character-alert_22
+  - first:
+      213: -6417967631136375583
+    second: tower2-character-alert_23
+  - first:
+      213: -8277065475567046652
+    second: tower2-character-alert_24
+  - first:
+      213: 4674651432115085512
+    second: tower2-character-alert_25
+  - first:
+      213: 5028562349743325719
+    second: tower2-character-alert_26
+  - first:
+      213: 3880100040149973610
+    second: tower2-character-alert_27
+  - first:
+      213: -4365157332529252351
+    second: tower2-character-alert_28
+  - first:
+      213: -8799288422947764276
+    second: tower2-character-alert_29
+  - first:
+      213: -2223345353407886841
+    second: tower2-character-alert_30
+  - first:
+      213: -4174236291523591155
+    second: tower2-character-alert_31
+  - first:
+      213: -5164543671957229818
+    second: tower2-character-alert_32
+  - first:
+      213: 2984242479051375144
+    second: tower2-character-alert_33
+  - first:
+      213: -3319619137726173343
+    second: tower2-character-alert_34
+  - first:
+      213: -8141615191365878852
+    second: tower2-character-alert_35
+  - first:
+      213: 4964484363397789440
+    second: tower2-character-alert_36
+  - first:
+      213: -8312503838312473067
+    second: tower2-character-alert_37
+  - first:
+      213: -9031100147163607062
+    second: tower2-character-alert_38
+  - first:
+      213: -3311478806318736162
+    second: tower2-character-alert_39
+  - first:
+      213: -5400183559675053964
+    second: tower2-character-alert_40
+  - first:
+      213: -8573643279996533657
+    second: tower2-character-alert_41
+  - first:
+      213: -1139433108823175269
+    second: tower2-character-alert_42
+  - first:
+      213: -6754230255732956372
+    second: tower2-character-alert_43
+  - first:
+      213: 2942023292101395306
+    second: tower2-character-alert_44
+  - first:
+      213: 5692995878515437135
+    second: tower2-character-alert_45
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 128
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tower2-character-alert_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e004b2c5151e38370800000000000000
+      internalID: 8323744275865747470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tower2-character-alert_1
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1f6865e50dfabc10800000000000000
+      internalID: 2070245180495654686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tower2-character-alert_2
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dbb37146a3e45db80800000000000000
+      internalID: -8370698319703884867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tower2-character-alert_3
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 587f924c135313720800000000000000
+      internalID: 2824096929198765957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tower2-character-alert_4
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18367eea0b204cf80800000000000000
+      internalID: -8087336072978668671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tower2-character-alert_5
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fff7df4041d288410800000000000000
+      internalID: 1479482041597526015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tower2-character-alert_6
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39ed31483fe841e80800000000000000
+      internalID: -8208779044245479789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tower2-character-alert_7
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87aae2d6c81d772b0800000000000000
+      internalID: -5586766411672409480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tower2-character-alert_8
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f823f39ae05d8d70800000000000000
+      internalID: 9046976194891950325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tower2-character-alert_9
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2108cc3a82fce8c0800000000000000
+      internalID: -3968530496081100498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tower2-character-alert_10
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff55e25c32a074740800000000000000
+      internalID: 5136085048787621375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tower2-character-alert_11
+      rect:
+        serializedVersion: 2
+        x: 1408
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a70e7a88a3797cf0800000000000000
+      internalID: -254044736254507104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tower2-character-alert_12
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b973a20c5abad660800000000000000
+      internalID: 7411441041135598009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tower2-character-alert_13
+      rect:
+        serializedVersion: 2
+        x: 1664
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e538cf5e8586897c0800000000000000
+      internalID: -4064383932676930722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tower2-character-alert_14
+      rect:
+        serializedVersion: 2
+        x: 1792
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f708b52636934c00800000000000000
+      internalID: 883715111199967225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tower2-character-alert_15
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b211b6b331175900800000000000000
+      internalID: 673025583121240758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tower2-character-alert_16
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba0e69eb25356bcb0800000000000000
+      internalID: -4848596333967777621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tower2-character-alert_17
+      rect:
+        serializedVersion: 2
+        x: 2176
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9e820267d38417b0800000000000000
+      internalID: -5254429904148984164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tower2-character-alert_18
+      rect:
+        serializedVersion: 2
+        x: 2304
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a073d02b84cf711b0800000000000000
+      internalID: -5685798615376906486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tower2-character-alert_19
+      rect:
+        serializedVersion: 2
+        x: 2432
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e3ddcd842c4a4780800000000000000
+      internalID: -8698056010431081503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tower2-character-alert_20
+      rect:
+        serializedVersion: 2
+        x: 2560
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d7af4e882d0732e0800000000000000
+      internalID: -2146232229581314090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 2d71ab1234df36b469d1b42fcea6b7ec
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":128.0,"y":128.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      tower2-character-alert_0: 8323744275865747470
+      tower2-character-alert_1: 2070245180495654686
+      tower2-character-alert_10: 5136085048787621375
+      tower2-character-alert_11: -254044736254507104
+      tower2-character-alert_12: 7411441041135598009
+      tower2-character-alert_13: -4064383932676930722
+      tower2-character-alert_14: 883715111199967225
+      tower2-character-alert_15: 673025583121240758
+      tower2-character-alert_16: -4848596333967777621
+      tower2-character-alert_17: -5254429904148984164
+      tower2-character-alert_18: -5685798615376906486
+      tower2-character-alert_19: -8698056010431081503
+      tower2-character-alert_2: -8370698319703884867
+      tower2-character-alert_20: -2146232229581314090
+      tower2-character-alert_3: 2824096929198765957
+      tower2-character-alert_4: -8087336072978668671
+      tower2-character-alert_5: 1479482041597526015
+      tower2-character-alert_6: -8208779044245479789
+      tower2-character-alert_7: -5586766411672409480
+      tower2-character-alert_8: 9046976194891950325
+      tower2-character-alert_9: -3968530496081100498
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
